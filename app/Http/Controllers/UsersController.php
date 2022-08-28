@@ -4,13 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class UsersController extends Controller
 {
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', '=', $request->email)->first();
+        if(!($user->status == 0)){
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                return redirect('/dashboard')->withSuccess('You have Successfully logged in');
+            } else{
+                session()->flash('success', 'UserName or Password did not match');
+                return redirect('/login');
+            }
+        } else{
+            session()->flash('success', 'Agent has not been approved yet!');
+            return redirect('/login');
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -41,6 +66,8 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+
+        dd($request);
         // Validation
         $request->validate([
             'name' => 'required|max:100',
@@ -54,9 +81,7 @@ class UsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        if($request->role){
-            $user->assignRole($request->role);
-        }
+        $user->assignRole('agent');
 
         session()->flash('success', 'User has been Created');
         return redirect('/admin/users');

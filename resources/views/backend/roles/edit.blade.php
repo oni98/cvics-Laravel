@@ -8,7 +8,7 @@
                     <h3 class="card-title">Edit Role</h3>
                     
                 </div>
-                @include('backend.partials.error_message')
+                @include('backend.partials.message')
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form action="{{route('roles.update', $role->id)}}" method="POST">
