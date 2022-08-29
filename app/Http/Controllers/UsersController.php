@@ -66,8 +66,6 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-
-        dd($request);
         // Validation
         $request->validate([
             'name' => 'required|max:100',
@@ -160,6 +158,6 @@ class UsersController extends Controller
         }
 
         session()->flash('success', 'User has been Deleted');
-        return redirect('/admin/users');
+        return back();
     }
 }

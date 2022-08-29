@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             $user->email = "admin@admin.com";
             $user->password = Hash::make('password');
             $user->status = 1;
+            $user->email_verified_at = '2022-08-28 16:09:28';
             $user->save();
             $user->assignRole('admin');
         }
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
             $user->email = "agent@agent.com";
             $user->password = Hash::make('password');
             $user->status = 1;
+            $user->email_verified_at = '2022-08-28 16:09:28';
             $user->save();
             $user->assignRole('agent');
         }

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\AgentController;
+use App\Http\Controllers\ApplicationController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -21,29 +23,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
+// Auth Routes
 Route::post('register/submit', [UsersController::class, 'store'])->name('register.agent');
 Route::post('/login', [UsersController::class, 'login'])->name('login.agent');
 
-Route::group(['middleware' => 'auth'],  function(){
+Route::group(['middleware' => ['verified', 'auth']],  function(){
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
-
+    // Admin Routes
     Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'],  function(){
+        // Role Management Routes
         Route::resource('roles', RolesController::class, ['name' => 'roles']);
         Route::resource('users', UsersController::class, ['name' => 'users']);
 
-        // Login
-        // Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
-        // Route::post('/login/submit', [LoginController::class, 'login'])->name('admin.login.submit');
-
-        // Logout
-        // Route::post('/logout/submit', [LoginController::class, 'logout'])->name('admin.logout.submit');
-
-        // Forget Password
-        // Route::get('/password/reset', [ForgetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-        // Route::post('/password/reset/submit', [ForgetPasswordController::class, 'reset'])->name('password.update');
+        // Agent Routes
+        Route::get('/agent/list', [AgentController::class, 'index'])->name('agents');
+        Route::get('/agent/pending', [AgentController::class, 'pendingAgent'])->name('pendingAgents');
+        Route::get('/agent/approve/{id}', [AgentController::class, 'approveAgent'])->name('agentApprove');
     });
 
 });
+
+// Application
+Route::get('/apply', [ApplicationController::class, 'index'])->name('application');
+Route::get('/apply/submit', [ApplicationController::class, 'store'])->name('application.store');
