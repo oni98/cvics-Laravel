@@ -6,7 +6,8 @@
         <h2>Application Form</h2>
     </div>
     <div>
-        <form>
+        <form action="{{route('application.store')}}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="Name">Name (as per NRIC/Passport) <span class="text-danger">*</span> </label>
@@ -25,7 +26,7 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="birth_date">Date of Birth <span class="text-danger">*</span> </label>
-                    <input class="datepicker form-control" name="birth_date" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" required>
+                    <input class="datepicker form-control" name="birth_date" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" required autocomplete="off">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="passport">Passport No <span class="text-danger">*</span> </label>
@@ -33,7 +34,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="passport_expire">Passport Expire Date <span class="text-danger">*</span> </label>
-                    <input class="datepicker form-control" name="passport_expire" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" required>
+                    <input class="datepicker form-control" name="passport_expire" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" required autocomplete="off">
                 </div>
             </div>
 
@@ -150,15 +151,18 @@
                 <div class="form-group col-md-3">
                     <label for="intake_month">Intake Month</label>
                     <select id="intake_month" name="intake_month" class="form-control">
-                        <option value="February" selected>February</option>
+                        <option disabled selected></option>
+                        <option value="February">February</option>
                         <option value="September">September</option>
                     </select>
                 </div>
                 <div class="form-group col-md-3">
                     <label for="intake_year">Intake Year</label>
                     <select id="intake_year" name="intake_year" class="form-control">
-                        <option value="2022" selected>2022</option>
-                        <option value="2021">2021</option>
+                        <option disabled selected></option>
+                        @foreach (range((date('Y')+2), $earliest_year) as $x)
+                        <option value="{{$x}}">{{$x}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -197,10 +201,12 @@
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="intake">Referer Name</label>
-                    <select id="intake" name="intake" class="form-control">
+                    <label for="referrer">Referrer Name</label>
+                    <select id="referrer" name="referrer" class="form-control">
                         <option disabled selected></option>
-                        <option value=""></option>
+                        @foreach ($agents as $agent)
+                            <option value="{{$agent->name}}">{{$agent->name}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
