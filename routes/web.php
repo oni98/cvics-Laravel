@@ -42,6 +42,9 @@ Route::group(['middleware' => ['verified', 'auth']],  function(){
         Route::get('/agent/list', [AgentController::class, 'index'])->name('agents');
         Route::get('/agent/pending', [AgentController::class, 'pendingAgent'])->name('pendingAgents');
         Route::get('/agent/approve/{id}', [AgentController::class, 'approveAgent'])->name('agentApprove');
+
+        // Application Routes
+        Route::get('/application/list', [ApplicationController::class, 'applicationList'])->name('application.list');
     });
 
 });

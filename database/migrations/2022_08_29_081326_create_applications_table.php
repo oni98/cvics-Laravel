@@ -15,6 +15,7 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique();
             $table->string('name');
             $table->string('mobile');
             $table->string('email');
@@ -61,6 +62,7 @@ class CreateApplicationsTable extends Migration
             $table->string('research_proposal')->nullable();
             $table->string('other1')->nullable();
             $table->string('other2')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
