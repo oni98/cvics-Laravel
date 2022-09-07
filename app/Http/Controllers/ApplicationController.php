@@ -20,7 +20,7 @@ class ApplicationController extends Controller
         )->where('status', '=', '1')->get();
 
         $earliest_year = 1950;
-        return view('backend.application_form', with(['agents' => $agents, 'earliest_year' => $earliest_year]));
+        return view('frontend.application_form', with(['agents' => $agents, 'earliest_year' => $earliest_year]));
     }
 
     public function store(Request $request)
@@ -120,6 +120,24 @@ class ApplicationController extends Controller
         return view('backend.application.application_list', ['applications' => $applications]);
     }
 
+    public function showApplication($id){
+        $application = Application::find($id);
+        return view('backend.application.application_view', ['application' => $application]);
+    }
+
+    public function editApplication($id){
+        $application = Application::find($id);
+        $agents = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'agent');
+            }
+        )->where('status', '=', '1')->get();
+
+        $earliest_year = 1950;
+        return view('backend.application.application_edit', ['application' => $application, 'agents' => $agents, 'earliest_year' => $earliest_year]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -128,6 +146,7 @@ class ApplicationController extends Controller
      */
     public function destroy($id)
     {
+        dd($id);
         $application = Application::find($id);
 
         if(!is_null($application)){

@@ -45,6 +45,9 @@ Route::group(['middleware' => ['verified', 'auth']],  function(){
 
         // Application Routes
         Route::get('/application/list', [ApplicationController::class, 'applicationList'])->name('application.list');
+        Route::get('/application/{id}/show', [ApplicationController::class, 'showApplication'])->name('application.show');
+        Route::get('/application/{id}/edit', [ApplicationController::class, 'editApplication'])->name('application.edit');
+        Route::delete('/application/delete/{id}', [ApplicationController::class, 'destroy'])->name('application.destroy');
     });
 
 });

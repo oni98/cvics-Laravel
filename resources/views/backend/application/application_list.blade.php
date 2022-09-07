@@ -17,8 +17,12 @@
                   <th>Application Id</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Passport</th>
-                  <th>Date Of Birth</th>
+                  <th>Phone</th>
+                  <th>Passport No</th>
+                  <th>Source</th>
+                  <th>Intake</th>
+                  <th>University</th>
+                  <th>Country</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -30,17 +34,23 @@
                         <td>{{ $application->code }}</td>
                         <td>{{ $application->name }}</td>
                         <td>{{ $application->email }}</td>
+                        <td>{{ $application->mobile }}</td>
                         <td>{{ $application->passport }}</td>
-                        <td>{{ $application->birth_date }}</td>
+                        <td>{{ $application->source }}</td>
+                        <td>{{ $application->intake_month.', '.$application->intake_year }}</td>
+                        <td>{{ $application->prepared_institution1 }}</td>
+                        <td>{{ $application->study_destination }}</td>
                         <td>{{ $application->status }}</td>
                         <td>
-                            <a href="{{route('users.edit', $application->id)}}" class="btn btn-success" title="Show Details"><i class="fas fa-eye"></i></a>
-                            <a href="{{route('users.edit', $application->id)}}" class="btn btn-info" title="Edit"><i class="fas fa-edit"></i></a>
-                            <a class="btn btn-danger" href="{{ route('users.destroy', $application->id) }}" class="nav-link" title="Delete"
+                            <a href="{{route('application.show', $application->id)}}" class="btn btn-success" title="Show Details"><i class="fas fa-eye"></i></a>
+
+                            <a href="{{route('application.edit', $application->id)}}" class="btn btn-info" title="Edit"><i class="fas fa-edit"></i></a>
+
+                            <a class="btn btn-danger" href="{{ route('application.destroy', $application->id) }}" class="nav-link" title="Delete"
                                 onclick="event.preventDefault(); document.getElementById('delete-form-{{$application->id}}').submit();">
                                 <i class="fas fa-trash"></i>
                             </a>
-                            <form id="delete-form-{{$application->id}}" action="{{ route('users.destroy', $application->id) }}" method="POST" style="display: none;">
+                            <form id="delete-form-{{$application->id}}" action="{{ route('application.destroy', $application->id) }}" method="POST" style="display: none;">
                               @method('DELETE')
                                 @csrf
                             </form>
