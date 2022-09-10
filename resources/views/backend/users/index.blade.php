@@ -7,8 +7,6 @@
             <div class="card-header row">
               <div class="col-md-6"><h3 class="card-title">User Management</h3></div>
               <div class="col-md-6"><a href="{{route('users.create')}}" class="btn btn-success float-right">Create User</a></div>
-              
-              
             </div>
             <!-- /.card-header -->
             <div class="card-body">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -30,6 +31,17 @@ class ApplicationController extends Controller
 
         if($application->save()){
             return redirect('/apply');
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $application = Application::find($id);
+        $application = $this->patch($request, $application);
+        $application->status = $request->status;
+
+        if($application->save()){
+            return view('backend.application.application_view', ['application' => $application]);
         }
     }
 
@@ -82,6 +94,7 @@ class ApplicationController extends Controller
         $application->source = $request->source;
         $application->referrer = $request->referrer;
         $application->remarks = $request->remarks;
+        $application->experience = $request->experience;
 
         $application->photo = $this->image($application->name, $request->photo);
         $application->passport_info = $this->image($application->name, $request->passport_info);
@@ -134,8 +147,10 @@ class ApplicationController extends Controller
             }
         )->where('status', '=', '1')->get();
 
+        $status = Status::all();
+
         $earliest_year = 1950;
-        return view('backend.application.application_edit', ['application' => $application, 'agents' => $agents, 'earliest_year' => $earliest_year]);
+        return view('backend.application.application_edit', ['application' => $application, 'status' => $status, 'agents' => $agents, 'earliest_year' => $earliest_year]);
     }
 
     /**

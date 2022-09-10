@@ -183,6 +183,37 @@
                         <td class="col-md-3 font-weight-bold">Remarks</td>
                         <td class="col-md-12" colspan="4"><input class="form-control" type="text" value="{{ $application->remarks }}"></td>
                       </tr>
+                      <tr>
+                        <td class="col-md-3 font-weight-bold">Work Experience</td>
+                        <td class="col-md-12" colspan="4"><input class="form-control" type="text" value="{{ $application->experience }}"></td>
+                      </tr>
+                      <tr>
+                        <td class="col-md-3 font-weight-bold">Status</td>
+                        <td class="col-md-12" colspan="4">
+                          <select id="status" name="status" class="form-control">
+                            <option disabled selected></option>
+                            @foreach ($status as $st)
+                                <option value="{{$st->id}}" {{($st->id == $application->status)? 'selected' : ''}}>{{$st->name}}</option>
+                            @endforeach
+                        </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="col-md-6"><input type="file" name="passport_info"></td>
+                        <td class="col-md-6"><input type="file" name="academic_docs"></td>
+                      </tr>
+                      <tr>
+                        <td class="col-md-6"><input type="file" name="resume"></td>
+                        <td class="col-md-6"><input type="file" name="language_proficiency"></td>
+                      </tr>
+                      <tr>
+                        <td class="col-md-6"><input type="file" name="personal_statement"></td>
+                        <td class="col-md-6"><input type="file" name="research_proposal"></td>
+                      </tr>
+                      <tr>
+                        <td class="col-md-6"><input type="file" name="other1"></td>
+                        <td class="col-md-6"><input type="file" name="other2"></td>
+                      </tr>
                 </tbody>
               </table>
             </div>

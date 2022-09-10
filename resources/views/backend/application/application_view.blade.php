@@ -158,6 +158,10 @@
                         <td class="col-md-3 font-weight-bold">Remarks</td>
                         <td class="col-md-12" colspan="4">{{ $application->remarks }}</td>
                       </tr>
+                      <tr>
+                        <td class="col-md-3 font-weight-bold">Work Experience</td>
+                        <td class="col-md-12" colspan="4">{{ $application->experience }}</td>
+                      </tr>
                 </tbody>
               </table>
             </div>

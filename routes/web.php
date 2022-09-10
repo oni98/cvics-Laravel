@@ -6,6 +6,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\StatusController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -48,6 +49,13 @@ Route::group(['middleware' => ['verified', 'auth']],  function(){
         Route::get('/application/{id}/show', [ApplicationController::class, 'showApplication'])->name('application.show');
         Route::get('/application/{id}/edit', [ApplicationController::class, 'editApplication'])->name('application.edit');
         Route::delete('/application/delete/{id}', [ApplicationController::class, 'destroy'])->name('application.destroy');
+
+        // Status Routes
+        Route::get('/status/list', [StatusController::class, 'index'])->name('status.list');
+        Route::post('/status/store', [StatusController::class, 'store'])->name('status.store');
+        Route::get('/status/{id}/edit', [StatusController::class, 'edit'])->name('status.edit');
+        Route::put('/status/{id}/update', [StatusController::class, 'update'])->name('status.update');
+        Route::delete('/status/{id}/delete', [StatusController::class, 'destroy'])->name('status.destroy');
     });
 
 });

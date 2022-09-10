@@ -59,6 +59,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('status.list')}}" class="nav-link {{ request()->is('admin/status*') ? 'active' : null }}">
+                            <i class="nav-icon fas fa-file-alt"></i>
+                            <p>
+                                Status List
+                            </p>
+                        </a>
+                    </li>
                     <li class="nav-item {{ request()->is('admin/agent*') ? 'menu-open' : null }}">
                         <a href="#" class="nav-link {{ request()->is('admin/agent*') ? 'active' : null }}">
                           <i class="nav-icon fas fa-briefcase"></i>

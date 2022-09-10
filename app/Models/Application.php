@@ -46,6 +46,7 @@ class Application extends Model
     'source',
     'referrer',
     'remarks',
+    'experience',
     'photo',
     'passport_info',
     'academic_docs',
@@ -55,4 +56,5 @@ class Application extends Model
     'research_proposal',
     'other1',
     'other2'];
+
 }

@@ -211,9 +211,15 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="remarks">Remarks</label>
-                <input type="text" class="form-control" id="remarks" name="remarks">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="remarks">Remarks</label>
+                    <input type="text" class="form-control" id="remarks" name="remarks">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="experience">Work Experience</label>
+                    <input type="text" name="experience" class="form-control" id="experience">
+                </div>
             </div>
 
             <div class="form-row">
