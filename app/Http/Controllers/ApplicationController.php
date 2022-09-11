@@ -27,7 +27,12 @@ class ApplicationController extends Controller
     public function store(Request $request)
     {
         $application = new Application();
-        $application = $this->patch($request, $application);
+
+        do {
+            $code = random_int(100000, 999999);
+        } while (Application::where("code", "=", $code)->first());
+
+        $application = $this->patch($request, $application, $code);
 
         if($application->save()){
             return redirect('/apply');
@@ -37,11 +42,11 @@ class ApplicationController extends Controller
     public function update(Request $request, $id)
     {
         $application = Application::find($id);
-        $application = $this->patch($request, $application);
+        $application = $this->patch($request, $application, $application->code);
         $application->status = $request->status;
 
         if($application->save()){
-            return view('backend.application.application_view', ['application' => $application]);
+            return redirect('/admin/application/'.$application->id.'/show');
         }
     }
 
@@ -50,11 +55,9 @@ class ApplicationController extends Controller
      * @param $application
      * @return object
      */
-    private function patch($request, $application): object
+    private function patch($request, $application, $code): object
     {
-        do {
-            $code = random_int(100000, 999999);
-        } while (Application::where("code", "=", $code)->first());
+        
 
         $application->code = $code;
         $application->name = $request->name;
@@ -96,17 +99,17 @@ class ApplicationController extends Controller
         $application->remarks = $request->remarks;
         $application->experience = $request->experience;
 
-        $application->photo = $this->image($application->name, $request->photo);
-        $application->passport_info = $this->image($application->name, $request->passport_info);
-        $application->academic_docs = $this->image($application->name, $request->academic_docs);
+        $application->photo = $this->image($application, $request->photo, 1);
+        $application->passport_info = $this->image($application, $request->passport_info, 2);
+        $application->academic_docs = $this->image($application, $request->academic_docs, 3);
 
-        $application->resume = $this->image($application->name, $request->resume);
-        $application->language_proficiency = $this->image($application->name, $request->language_proficiency);
-        $application->personal_statement = $this->image($application->name, $request->personal_statement);
+        $application->resume = $this->image($application, $request->resume, 4);
+        $application->language_proficiency = $this->image($application, $request->language_proficiency, 5);
+        $application->personal_statement = $this->image($application, $request->personal_statement, 6);
 
-        $application->research_proposal = $this->image($application->name, $request->research_proposal);
-        $application->other1 = $this->image($application->name, $request->other1);
-        $application->other2 = $this->image($application->name, $request->other2);
+        $application->research_proposal = $this->image($application, $request->research_proposal, 7);
+        $application->other1 = $this->image($application, $request->other1, 8);
+        $application->other2 = $this->image($application, $request->other2, 9);
 
         return $application;
     }
@@ -115,14 +118,87 @@ class ApplicationController extends Controller
      * @param $application->name
      * @param $request->image
      */
-    private function image($name, $image)
+    private function image($application, $image, $image_type)
     {
         $this->i++;
-        if(!empty($image)){
-            if(!file_exists('public/'.$name.'/'.$image)){
-                $image_name = $this->i.'-'.time() . '.' . $image->getClientOriginalExtension();
-                $path = $image->storeAs('public/'.$name.'/', $image_name);
-                return $image_name;
+        if (!empty($image)) {
+            if ($image_type == 1) {
+                if (file_exists(public_path('storage/'.$application->name.'/' . $application->photo))) {
+                    unlink(public_path('storage/'.$application->name.'/' . $application->photo));
+                }
+            } 
+            elseif ($image_type == 2) {
+                if (file_exists(public_path('storage/'.$application->name.'/' . $application->passport_info))) {
+                    unlink(public_path('storage/'.$application->name.'/' . $application->passport_info));
+                }
+            } 
+            elseif ($image_type == 3) {
+                if (file_exists(public_path('storage/'.$application->name.'/' . $application->academic_docs))) {
+                    unlink(public_path('storage/'.$application->name.'/' . $application->academic_docs));
+                }
+            } 
+            elseif ($image_type == 4) {
+                if (file_exists(public_path('storage/'.$application->name.'/' . $application->resume))) {
+                    unlink(public_path('storage/'.$application->name.'/' . $application->resume));
+                }
+            } 
+            elseif ($image_type == 5) {
+                if (file_exists(public_path('storage/'.$application->name.'/' . $application->language_proficiency))) {
+                    unlink(public_path('storage/'.$application->name.'/' . $application->language_proficiency));
+                }
+            } 
+            elseif ($image_type == 6) {
+                if (file_exists(public_path('storage/'.$application->name.'/' . $application->personal_statement))) {
+                    unlink(public_path('storage/'.$application->name.'/' . $application->personal_statement));
+                }
+            } 
+            elseif ($image_type == 7) {
+                if (file_exists(public_path('storage/'.$application->name.'/' . $application->research_proposal))) {
+                    unlink(public_path('storage/'.$application->name.'/' . $application->research_proposal));
+                }
+            } 
+            elseif ($image_type == 8) {
+                if (file_exists(public_path('storage/'.$application->name.'/' . $application->other1))) {
+                    unlink(public_path('storage/'.$application->name.'/' . $application->other1));
+                }
+            } 
+            else {
+                if (file_exists(public_path('storage/'.$application->name.'/' . $application->other2))) {
+                    unlink(public_path('storage/'.$application->name.'/' . $application->other2));
+                }
+            }
+
+            $image_name = $this->i.'-'.time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('public/'.$application->name.'/', $image_name);
+            return $image_name;
+            
+        } else {
+            if ($image_type == 1) {
+                return $application->photo;
+            } 
+            elseif ($image_type == 2) {
+                return $application->passport_info;
+            } 
+            elseif ($image_type == 3) {
+                return $application->academic_docs;
+            } 
+            elseif ($image_type == 4) {
+                return $application->resume;
+            } 
+            elseif ($image_type == 5) {
+                return $application->language_proficiency;
+            } 
+            elseif ($image_type == 6) {
+                return $application->personal_statement;
+            } 
+            elseif ($image_type == 7) {
+                return $application->research_proposal;
+            } 
+            elseif ($image_type == 8) {
+                return $application->other1;
+            } 
+            else {
+                return $application->other2;
             }
         }
     }

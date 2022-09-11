@@ -12,8 +12,8 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header text-center">
-              
-              <div class="col-md-12">
+              <div class="float-right"><a href="{{route('application.edit', $application->id)}}" class="btn btn-info"> Edit </a></div>
+              <div class="col-md-12 mt-5">
                 <img src="{{asset('assets/backend/dist/img/application_header.png')}}" alt="" width="100%">
               </div>
             </div>

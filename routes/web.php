@@ -48,6 +48,7 @@ Route::group(['middleware' => ['verified', 'auth']],  function(){
         Route::get('/application/list', [ApplicationController::class, 'applicationList'])->name('application.list');
         Route::get('/application/{id}/show', [ApplicationController::class, 'showApplication'])->name('application.show');
         Route::get('/application/{id}/edit', [ApplicationController::class, 'editApplication'])->name('application.edit');
+        Route::put('/application/{id}/update', [ApplicationController::class, 'update'])->name('application.update');
         Route::delete('/application/delete/{id}', [ApplicationController::class, 'destroy'])->name('application.destroy');
 
         // Status Routes
