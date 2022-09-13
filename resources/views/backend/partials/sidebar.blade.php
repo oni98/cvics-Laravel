@@ -61,7 +61,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{route('status.list')}}" class="nav-link {{ request()->is('admin/status*') ? 'active' : null }}">
-                            <i class="nav-icon fas fa-file-alt"></i>
+                            <i class="nav-icon fas fa-info"></i>
                             <p>
                                 Status List
                             </p>

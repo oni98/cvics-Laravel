@@ -160,7 +160,7 @@
                     <label for="intake_year">Intake Year</label>
                     <select id="intake_year" name="intake_year" class="form-control">
                         <option disabled selected></option>
-                        @foreach (range((date('Y')+2), $earliest_year) as $x)
+                        @foreach (range((date('Y')+5), $earliest_year) as $x)
                         <option value="{{$x}}">{{$x}}</option>
                         @endforeach
                     </select>
@@ -205,7 +205,7 @@
                     <select id="referrer" name="referrer" class="form-control">
                         <option disabled selected></option>
                         @foreach ($agents as $agent)
-                            <option value="{{$agent->name}}">{{$agent->name}}</option>
+                            <option value="{{$agent->id}}">{{$agent->name}}</option>
                         @endforeach
                     </select>
                 </div>

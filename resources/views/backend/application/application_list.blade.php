@@ -33,7 +33,7 @@
                             @foreach ($applications as $application)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $application->code }}</td>
+                                    <td>CVI-2022{{ $application->code }}</td>
                                     <td>{{ $application->name }}</td>
                                     <td>{{ $application->email }}</td>
                                     <td>{{ $application->mobile }}</td>
@@ -42,7 +42,13 @@
                                     <td>{{ $application->intake_month . ', ' . $application->intake_year }}</td>
                                     <td>{{ $application->prepared_institution1 }}</td>
                                     <td>{{ $application->study_destination }}</td>
-                                    <td>{{ $application->status }}</td>
+                                    <td>
+                                        @foreach ($status as $st)
+                                            @if ($st->id == $application->status)
+                                                {{ $st->name }}
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <a href="{{ route('application.show', $application->id) }}" class="btn btn-success"
                                             title="Show Details"><i class="fas fa-eye"></i></a>

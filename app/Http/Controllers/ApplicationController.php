@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\applicationEmail;
+use App\Mail\statusEmail;
 use App\Models\Application;
 use App\Models\Status;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicationController extends Controller
 {
@@ -20,7 +24,7 @@ class ApplicationController extends Controller
             }
         )->where('status', '=', '1')->get();
 
-        $earliest_year = 1950;
+        $earliest_year = Carbon::now()->format('Y');
         return view('frontend.application_form', with(['agents' => $agents, 'earliest_year' => $earliest_year]));
     }
 
@@ -32,9 +36,15 @@ class ApplicationController extends Controller
             $code = random_int(100000, 999999);
         } while (Application::where("code", "=", $code)->first());
 
+        $date = Carbon::now()->format('y');
+        $code = $date.$code;
+
         $application = $this->patch($request, $application, $code);
 
         if($application->save()){
+
+            $admin = User::whereHas('roles',function ($q) {$q->where('name', 'admin');})->get();
+            Mail::to($request->email)->cc($admin->email)->send(new applicationEmail($application));
             return redirect('/apply');
         }
     }
@@ -42,10 +52,19 @@ class ApplicationController extends Controller
     public function update(Request $request, $id)
     {
         $application = Application::find($id);
+        $prevStatus = $application->status;
         $application = $this->patch($request, $application, $application->code);
         $application->status = $request->status;
 
         if($application->save()){
+            if ($prevStatus != $request->status) {
+                $status = Status::find($request->status);
+                $email = [
+                    'status' => $status->name
+                ];
+                Mail::to($request->email)->send(new statusEmail($email));
+            }
+
             return redirect('/admin/application/'.$application->id.'/show');
         }
     }
@@ -206,12 +225,20 @@ class ApplicationController extends Controller
 
     public function applicationList(){
         $applications = Application::all();
-        return view('backend.application.application_list', ['applications' => $applications]);
+        $status = Status::all();
+        return view('backend.application.application_list', ['applications' => $applications, 'status' => $status]);
     }
 
     public function showApplication($id){
         $application = Application::find($id);
-        return view('backend.application.application_view', ['application' => $application]);
+        $status = Status::all();
+        $agents = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'agent');
+            }
+        )->where('status', '=', '1')->get();
+        return view('backend.application.application_view', ['application' => $application, 'agents' => $agents, 'status' => $status]);
     }
 
     public function editApplication($id){
@@ -225,7 +252,7 @@ class ApplicationController extends Controller
 
         $status = Status::all();
 
-        $earliest_year = 1950;
+        $earliest_year = Carbon::now()->format('Y');
         return view('backend.application.application_edit', ['application' => $application, 'status' => $status, 'agents' => $agents, 'earliest_year' => $earliest_year]);
     }
 

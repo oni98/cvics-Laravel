@@ -51,7 +51,7 @@ class CreateApplicationsTable extends Migration
             $table->string('prepared_institution2')->nullable();
             $table->string('subject_of_interest2')->nullable();
             $table->string('source')->nullable();
-            $table->string('referrer')->nullable();
+            $table->bigInteger('referrer')->nullable();
             $table->string('remarks')->nullable();
             $table->string('experience')->nullable();
             $table->string('photo');
@@ -63,7 +63,7 @@ class CreateApplicationsTable extends Migration
             $table->string('research_proposal')->nullable();
             $table->string('other1')->nullable();
             $table->string('other2')->nullable();
-            $table->integer('status')->default(1);
+            $table->bigInteger('status')->default(1);
             $table->timestamps();
         });
     }
