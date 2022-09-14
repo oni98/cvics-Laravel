@@ -10,6 +10,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class ApplicationController extends Controller
 {
@@ -37,14 +39,23 @@ class ApplicationController extends Controller
         } while (Application::where("code", "=", $code)->first());
 
         $date = Carbon::now()->format('y');
-        $code = $date.$code;
+        $code = $date . $code;
 
-        $application = $this->patch($request, $application, $code);
+        $application = $this->patch($application, $request, $code);
 
-        if($application->save()){
+        $admin = User::whereHas('roles', function ($q) {$q->where('name', 'admin');})->get();
+        $agents = User::whereHas('roles',function ($q) {$q->where('name', 'agent');})->where('status', '=', '1')->get();
 
-            $admin = User::whereHas('roles',function ($q) {$q->where('name', 'admin');})->get();
-            Mail::to($request->email)->cc($admin->email)->send(new applicationEmail($application));
+        $data = [
+            'application' => $application,
+            'agents' => $agents
+        ];
+
+        $pdf = PDF::loadView('pdf.application', $data);
+        Storage::put('public/' . $application->code . '/ApplicationForm.pdf', $pdf->output());
+
+        if ($application->save()) {
+            Mail::to($request->email)->cc($admin[0]->email)->send(new applicationEmail($application));
             return redirect('/apply');
         }
     }
@@ -53,10 +64,10 @@ class ApplicationController extends Controller
     {
         $application = Application::find($id);
         $prevStatus = $application->status;
-        $application = $this->patch($request, $application, $application->code);
+        $application = $this->patch($application, $request, $application->code);
         $application->status = $request->status;
 
-        if($application->save()){
+        if ($application->save()) {
             if ($prevStatus != $request->status) {
                 $status = Status::find($request->status);
                 $email = [
@@ -65,19 +76,17 @@ class ApplicationController extends Controller
                 Mail::to($request->email)->send(new statusEmail($email));
             }
 
-            return redirect('/admin/application/'.$application->id.'/show');
+            return redirect('/admin/application/' . $application->id . '/show');
         }
     }
 
-     /**
+    /**
      * @param $request
      * @param $application
      * @return object
      */
-    private function patch($request, $application, $code): object
+    private function patch($application, $request, $code): object
     {
-        
-
         $application->code = $code;
         $application->name = $request->name;
         $application->mobile = $request->mobile;
@@ -141,95 +150,87 @@ class ApplicationController extends Controller
     {
         $this->i++;
         if (!empty($image)) {
-            if ($image_type == 1) {
-                if (file_exists(public_path('storage/'.$application->name.'/' . $application->photo))) {
-                    unlink(public_path('storage/'.$application->name.'/' . $application->photo));
-                }
-            } 
-            elseif ($image_type == 2) {
-                if (file_exists(public_path('storage/'.$application->name.'/' . $application->passport_info))) {
-                    unlink(public_path('storage/'.$application->name.'/' . $application->passport_info));
-                }
-            } 
-            elseif ($image_type == 3) {
-                if (file_exists(public_path('storage/'.$application->name.'/' . $application->academic_docs))) {
-                    unlink(public_path('storage/'.$application->name.'/' . $application->academic_docs));
-                }
-            } 
-            elseif ($image_type == 4) {
-                if (file_exists(public_path('storage/'.$application->name.'/' . $application->resume))) {
-                    unlink(public_path('storage/'.$application->name.'/' . $application->resume));
-                }
-            } 
-            elseif ($image_type == 5) {
-                if (file_exists(public_path('storage/'.$application->name.'/' . $application->language_proficiency))) {
-                    unlink(public_path('storage/'.$application->name.'/' . $application->language_proficiency));
-                }
-            } 
-            elseif ($image_type == 6) {
-                if (file_exists(public_path('storage/'.$application->name.'/' . $application->personal_statement))) {
-                    unlink(public_path('storage/'.$application->name.'/' . $application->personal_statement));
-                }
-            } 
-            elseif ($image_type == 7) {
-                if (file_exists(public_path('storage/'.$application->name.'/' . $application->research_proposal))) {
-                    unlink(public_path('storage/'.$application->name.'/' . $application->research_proposal));
-                }
-            } 
-            elseif ($image_type == 8) {
-                if (file_exists(public_path('storage/'.$application->name.'/' . $application->other1))) {
-                    unlink(public_path('storage/'.$application->name.'/' . $application->other1));
-                }
-            } 
-            else {
-                if (file_exists(public_path('storage/'.$application->name.'/' . $application->other2))) {
-                    unlink(public_path('storage/'.$application->name.'/' . $application->other2));
-                }
+            if (file_exists(public_path('storage/' . $application->code . '/' . $image))) {
+                unlink(public_path('storage/' . $application->code . '/' . $image));
             }
+            // } 
+            // elseif ($image_type == 2) {
+            //     if (file_exists(public_path('storage/'.$application->code.'/' . $image))) {
+            //         unlink(public_path('storage/'.$application->code.'/' . $image));
+            //     }
+            // } 
+            // elseif ($image_type == 3) {
+            //     if (file_exists(public_path('storage/'.$application->code.'/' . $image))) {
+            //         unlink(public_path('storage/'.$application->code.'/' . $image));
+            //     }
+            // } 
+            // elseif ($image_type == 4) {
+            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->resume))) {
+            //         unlink(public_path('storage/'.$application->code.'/' . $application->resume));
+            //     }
+            // } 
+            // elseif ($image_type == 5) {
+            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->language_proficiency))) {
+            //         unlink(public_path('storage/'.$application->code.'/' . $application->language_proficiency));
+            //     }
+            // } 
+            // elseif ($image_type == 6) {
+            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->personal_statement))) {
+            //         unlink(public_path('storage/'.$application->code.'/' . $application->personal_statement));
+            //     }
+            // } 
+            // elseif ($image_type == 7) {
+            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->research_proposal))) {
+            //         unlink(public_path('storage/'.$application->code.'/' . $application->research_proposal));
+            //     }
+            // } 
+            // elseif ($image_type == 8) {
+            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->other1))) {
+            //         unlink(public_path('storage/'.$application->code.'/' . $application->other1));
+            //     }
+            // } 
+            // else {
+            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->other2))) {
+            //         unlink(public_path('storage/'.$application->code.'/' . $application->other2));
+            //     }
+            // }
 
-            $image_name = $this->i.'-'.time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('public/'.$application->name.'/', $image_name);
+            $image_name = $this->i . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('public/' . $application->code . '/', $image_name);
             return $image_name;
-            
         } else {
             if ($image_type == 1) {
                 return $application->photo;
-            } 
-            elseif ($image_type == 2) {
+            } elseif ($image_type == 2) {
                 return $application->passport_info;
-            } 
-            elseif ($image_type == 3) {
+            } elseif ($image_type == 3) {
                 return $application->academic_docs;
-            } 
-            elseif ($image_type == 4) {
+            } elseif ($image_type == 4) {
                 return $application->resume;
-            } 
-            elseif ($image_type == 5) {
+            } elseif ($image_type == 5) {
                 return $application->language_proficiency;
-            } 
-            elseif ($image_type == 6) {
+            } elseif ($image_type == 6) {
                 return $application->personal_statement;
-            } 
-            elseif ($image_type == 7) {
+            } elseif ($image_type == 7) {
                 return $application->research_proposal;
-            } 
-            elseif ($image_type == 8) {
+            } elseif ($image_type == 8) {
                 return $application->other1;
-            } 
-            else {
+            } else {
                 return $application->other2;
             }
         }
     }
 
 
-    public function applicationList(){
+    public function applicationList()
+    {
         $applications = Application::all();
         $status = Status::all();
         return view('backend.application.application_list', ['applications' => $applications, 'status' => $status]);
     }
 
-    public function showApplication($id){
+    public function showApplication($id)
+    {
         $application = Application::find($id);
         $status = Status::all();
         $agents = User::whereHas(
@@ -241,7 +242,8 @@ class ApplicationController extends Controller
         return view('backend.application.application_view', ['application' => $application, 'agents' => $agents, 'status' => $status]);
     }
 
-    public function editApplication($id){
+    public function editApplication($id)
+    {
         $application = Application::find($id);
         $agents = User::whereHas(
             'roles',
@@ -267,7 +269,7 @@ class ApplicationController extends Controller
         dd($id);
         $application = Application::find($id);
 
-        if(!is_null($application)){
+        if (!is_null($application)) {
             $application->delete();
         }
 
