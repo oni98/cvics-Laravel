@@ -12,7 +12,7 @@
         }
 
         tr:nth-child(odd) {
-            background: #dee2e6;
+            background: #f2f2f2;
         }
 
         .fw-bold {
@@ -175,6 +175,9 @@
                 </td>
             </tr>
             <tr>
+                <td class="fw-bold">Remarks</td>
+                <td>: {{ $application->remarks }}</td>
+                
                 <td class="fw-bold">Work Experience</td>
                 <td>: {{ $application->experience }}</td>
             </tr>

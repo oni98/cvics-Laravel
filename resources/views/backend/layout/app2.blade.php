@@ -18,7 +18,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
         integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
 </head>
 
@@ -35,20 +35,28 @@
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('assets/backend/dist/img/full-logo.png') }}" class="" alt="CVICS" height="80px" width="300px">
+                        <img src="{{ asset('assets/backend/dist/img/full-logo.png') }}" class="" alt="CVICS"
+                            height="80px" width="300px">
                     </a>
                 </div>
             </nav>
         </div>
         <!-- Main content -->
-        <div class="container-fluid">
-            <div class="container my-5">
+        <div class="container-fluid background-image">
+            <div class="container py-5">
                 @yield('content')
             </div>
         </div>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+    <footer class="main-footer mx-auto">
+        <strong>Copyright &copy; 2022 <a href="https://cvics.org">CVICS</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 1.0.0
+        </div>
+    </footer>
     </div>
     <!-- ./wrapper -->
 
@@ -66,6 +74,8 @@
     <script>
         $('.datepicker').datepicker();
     </script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    @stack('custom_script')
 </body>
 
 </html>

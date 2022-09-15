@@ -64,6 +64,7 @@ class CreateApplicationsTable extends Migration
             $table->string('other1')->nullable();
             $table->string('other2')->nullable();
             $table->bigInteger('status')->default(1);
+            $table->string('comments')->nullable();
             $table->timestamps();
         });
     }

@@ -66,6 +66,7 @@ class ApplicationController extends Controller
         $prevStatus = $application->status;
         $application = $this->patch($application, $request, $application->code);
         $application->status = $request->status;
+        $application->comments = $request->comments;
 
         if ($application->save()) {
             if ($prevStatus != $request->status) {
@@ -87,7 +88,7 @@ class ApplicationController extends Controller
      */
     private function patch($application, $request, $code): object
     {
-        $application->code = $code;
+        $application->code = 'CVI-'.$code;
         $application->name = $request->name;
         $application->mobile = $request->mobile;
         $application->email = $request->email;
@@ -275,5 +276,34 @@ class ApplicationController extends Controller
 
         session()->flash('success', 'Application has been Deleted');
         return back();
+    }
+
+    public function checkStatus(){
+        return view('frontend.check_status');
+    }
+
+    public function searchList(Request $request){
+        $code = !empty($request->code) ? $request->code : '';
+        $passport = !empty($request->passport) ? $request->passport : '';
+
+        if(($code != '') || ($passport != '')){
+            $application = Application::with(['status']);
+        }
+        
+        if ($code != '') {
+            $application = $application->where('code', $code);
+        }
+        if ($passport != '') {
+            $application = $application->where('passport', $passport);
+        }
+        
+        $application = $application->get();
+        
+        $data = [
+            'data' => $application,
+            'status' => 'ok',
+            'code' => 200
+        ];
+        return response()->json($data);
     }
 }

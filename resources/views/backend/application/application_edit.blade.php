@@ -210,6 +210,10 @@
                         <td colspan="3"><input class="form-control" type="text" name="remarks" value="{{ $application->remarks }}"></td>
                       </tr>
                       <tr>
+                        <td class="font-weight-bold">Comments</td>
+                        <td colspan="3"><input class="form-control" type="text" name="comments" value="{{ $application->comments }}"></td>
+                      </tr>
+                      <tr>
                         <td>
                           <a href="{{ asset('storage/'.$application->name.'/'.$application->photo) }}" download> Click to download Photo
                           </a>

@@ -1,9 +1,9 @@
-.application-form{
+.application-form {
     background: #acd9bb;
     padding: 30px;
 }
 
-.application-form .card-title{
+.application-form .card-title {
     display: block;
     width: 100%;
     background: #075e54;
@@ -12,7 +12,7 @@
     text-align: center;
 }
 
-.application-form .card-title h2{
+.application-form .card-title h2 {
     color: #fff;
     font-family: sans-serif;
     font-weight: bold;
@@ -23,7 +23,7 @@
     box-shadow: 0px 0px 2px 1px #04b51e inset;
 }
 
-.application-form .btn-submit{
+.application-form .btn-submit {
     background: #075e54;
     border: 1px solid #0add5d;
     color: #fff;
@@ -31,8 +31,15 @@
     font-size: 20px;
 }
 
-.application-form .btn-submit:hover{
+.application-form .btn-submit:hover {
     background: #bb4907;
 
 }
 
+.background-image {
+    background-image: url('../img/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 470px;
+}

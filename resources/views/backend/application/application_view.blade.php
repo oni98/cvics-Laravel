@@ -183,6 +183,10 @@
                             <td class="col-md-12" colspan="4">{{ $application->remarks }}</td>
                         </tr>
                         <tr>
+                            <td class="col-md-3 font-weight-bold">Comments</td>
+                            <td class="col-md-12" colspan="4">{{ $application->comments }}</td>
+                        </tr>
+                        <tr>
                           <td>
                             <a href="{{ asset('storage/'.$application->name.'/'.$application->photo) }}" download> Click to download Photo
                             </a>

@@ -5,8 +5,14 @@
 </head>
 <body>
     <h1>Mail from {{@config('app.name')}}</h1>
-    <p>The Application Form and the attached files are down below. Click to view or download them.</p>
-   
+    <br>
+    <p>Dear Applicant {{$application['name']}},</p>
+    <p>Your Application has been submitted successfully.</p>
+    <p>Passport No: {{$application['passport']}}</p>
+    <p>Application No: {{$application['code']}}</p>
+    <br>
     <p>Thank you</p>
+    <p>CVI Consultancy Services.</p>
+
 </body>
 </html>

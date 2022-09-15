@@ -119,7 +119,7 @@
     <script>
         $('.datepicker').datepicker();
     </script>
+<script src="{{asset('js/app.js')}}"></script>
 @stack('custom_script')
-<script src="js/app.js"></script>
 </body>
 </html>

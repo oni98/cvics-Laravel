@@ -57,4 +57,7 @@ class Application extends Model
     'other1',
     'other2'];
 
+    public function status(){
+        return $this->belongsTo(Status::class, 'status');
+    }
 }

@@ -64,3 +64,6 @@ Route::group(['middleware' => ['verified', 'auth']],  function(){
 // Application
 Route::get('/apply', [ApplicationController::class, 'index'])->name('application');
 Route::post('/apply/submit', [ApplicationController::class, 'store'])->name('application.store');
+
+// Check Status
+Route::get('/check-status', [ApplicationController::class, 'checkStatus'])->name('checkStatus');
