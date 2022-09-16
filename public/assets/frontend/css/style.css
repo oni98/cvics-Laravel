@@ -43,3 +43,11 @@
     background-size: cover;
     min-height: 470px;
 }
+
+.check-status1 {
+    width: 10%;
+}
+
+.check-status2 {
+    width: 30%;
+}

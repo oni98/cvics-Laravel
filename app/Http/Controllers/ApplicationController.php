@@ -283,21 +283,23 @@ class ApplicationController extends Controller
     }
 
     public function searchList(Request $request){
+       
         $code = !empty($request->code) ? $request->code : '';
         $passport = !empty($request->passport) ? $request->passport : '';
 
-        if(($code != '') || ($passport != '')){
-            $application = Application::with(['status']);
-        }
+        // if(($code != '') && ($passport != '')){
+        $application = Application::with(['status'])->where([['code', $code], ['passport', $passport]])->first();
+        //  dd($application);
+        // }
         
-        if ($code != '') {
-            $application = $application->where('code', $code);
-        }
-        if ($passport != '') {
-            $application = $application->where('passport', $passport);
-        }
+        // if ($code != '') {
+        //     $application = $application->where('code', $code);
+        // }
+        // if ($passport != '') {
+        //     $application = $application->where('passport', $passport);
+        // }
         
-        $application = $application->get();
+        // $application = $application->get();
         
         $data = [
             'data' => $application,
