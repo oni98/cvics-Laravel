@@ -32,34 +32,34 @@ class applicationEmail extends Mailable
         $email = $this->subject('CVICS')->view('emails.application_email');
 
         // $attachments is an array with file paths of attachments
-        $email->attach('storage/'.$this->application->code.'/ApplicationForm.pdf');
+        $email->attach('storage/applications/'.$this->application->code.'/ApplicationForm.pdf');
         
         if (!empty($this->application->photo)) {
-            $email->attach('storage/'.$this->application->code.'/'.$this->application->photo);
+            $email->attach('storage/applications/'.$this->application->code.'/'.$this->application->photo);
         }
         if (!empty($this->application->passport_info)) {
-            $email->attach('storage/'.$this->application->code.'/'.$this->application->passport_info);
+            $email->attach('storage/applications/'.$this->application->code.'/'.$this->application->passport_info);
         }
         if (!empty($this->application->academic_docs)) {
-            $email->attach('storage/'.$this->application->code.'/'.$this->application->academic_docs);
+            $email->attach('storage/applications/'.$this->application->code.'/'.$this->application->academic_docs);
         }
         if (!empty($this->application->resume)) {
-            $email->attach('storage/'.$this->application->code.'/'.$this->application->resume);
+            $email->attach('storage/applications/'.$this->application->code.'/'.$this->application->resume);
         }
         if (!empty($this->application->language_proficiency)) {
-            $email->attach('storage/'.$this->application->code.'/'.$this->application->language_proficiency);
+            $email->attach('storage/applications/'.$this->application->code.'/'.$this->application->language_proficiency);
         }
         if (!empty($this->application->personal_statement)) {
-            $email->attach('storage/'.$this->application->code.'/'.$this->application->personal_statement);
+            $email->attach('storage/applications/'.$this->application->code.'/'.$this->application->personal_statement);
         }
         if (!empty($this->application->research_proposal)) {
-            $email->attach('storage/'.$this->application->code.'/'.$this->application->research_proposal);
+            $email->attach('storage/applications/'.$this->application->code.'/'.$this->application->research_proposal);
         }
         if (!empty($this->application->other1)) {
-            $email->attach('storage/'.$this->application->code.'/'.$this->application->other1);
+            $email->attach('storage/applications/'.$this->application->code.'/'.$this->application->other1);
         }
         if (!empty($this->application->other2)) {
-            $email->attach('storage/'.$this->application->code.'/'.$this->application->other2);
+            $email->attach('storage/applications/'.$this->application->code.'/'.$this->application->other2);
         }
 
         return $email;

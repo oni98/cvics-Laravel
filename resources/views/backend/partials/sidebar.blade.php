@@ -34,8 +34,26 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('package.list')}}" class="nav-link {{ request()->is('promotional-packages') ? 'active' : null }}">
+                        <i class="nav-icon fas fa-box"></i>
+                        <p>
+                            Promotional Packages
+                        </p>
+                    </a>
+                </li>
+                @role('agent')
+                <li class="nav-item">
+                    <a href="{{route('agent.application.list')}}" class="nav-link {{ request()->is('applications') ? 'active' : null }}">
+                        <i class="nav-icon fas fa-file-alt"></i>
+                        <p>
+                            Application List
+                        </p>
+                    </a>
+                </li>
+                @endrole
                 @role('admin')
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{route('roles.index')}}" class="nav-link {{ request()->is('admin/roles*') ? 'active' : null }}">
                             <i class="nav-icon fas fa-tasks"></i>
                             <p>
@@ -50,7 +68,7 @@
                                 User Management
                             </p>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a href="{{route('application.list')}}" class="nav-link {{ request()->is('admin/application*') ? 'active' : null }}">
                             <i class="nav-icon fas fa-file-alt"></i>

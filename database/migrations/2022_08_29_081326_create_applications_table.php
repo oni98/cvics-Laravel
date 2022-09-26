@@ -42,6 +42,7 @@ class CreateApplicationsTable extends Migration
             $table->string('master_year')->nullable();
             $table->string('master_institute')->nullable();
             $table->string('master_cgpa')->nullable();
+            $table->string('proof_of_language')->nullable();
             $table->string('ielts')->nullable();
             $table->string('study_destination')->nullable();
             $table->string('intake_month')->nullable();

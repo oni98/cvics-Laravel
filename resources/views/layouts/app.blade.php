@@ -15,16 +15,17 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('assets/backend/dist/css/adminlte.min.css') }}">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('assets/backend/dist/img/full-logo.png') }}" class="img-circle elevation-2"
+                    <img src="{{ asset('assets/backend/dist/img/full-logo.png') }}" class=""
                     alt="CVICS" height="60px" width="250px">
                     {{-- {{ config('app.name', 'Laravel') }} --}}
                 </a>
@@ -77,9 +78,17 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 background-image">
             @yield('content')
         </main>
+
+        <footer class="main-footer mx-auto">
+            <strong>Copyright &copy; 2022 <a href="https://cvics.org">CVICS</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0.0
+            </div>
+        </footer>
     </div>
 </body>
 </html>

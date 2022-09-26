@@ -7,6 +7,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\PromotionalPackageController;
+use App\Http\Controllers\QuotationController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -27,17 +29,31 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 // Auth Routes
-Route::post('register/submit', [UsersController::class, 'store'])->name('register.agent');
+Route::post('register/submit', [AgentController::class, 'store'])->name('register.agent');
 Route::post('/login', [UsersController::class, 'login'])->name('login.agent');
 
-Route::group(['middleware' => ['verified', 'auth']],  function(){
+// Referred Auth Routes
+Route::get('apply/{id}/referredby={name}', [ApplicationController::class, 'referredApplication'])->name('referred.application');
+
+Route::group(['middleware' => ['verified', 'auth']],  function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
-    // Admin Routes
-    Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'],  function(){
+    // Application Routes for Agent
+    Route::get('/applications', [AgentController::class, 'applicationList'])->name('agent.application.list');
+    Route::get('/application/{id}/show', [ApplicationController::class, 'showApplication'])->name('application.show');
+    Route::get('/application/{id}/edit', [ApplicationController::class, 'editApplication'])->name('application.edit');
+    Route::put('/application/{id}/update', [ApplicationController::class, 'update'])->name('application.update');
+    Route::delete('/application/delete/{id}', [ApplicationController::class, 'destroy'])->name('application.destroy');
+
+    // Promotional Package Routes
+    Route::get('/promotional-packages', [PromotionalPackageController::class, 'index'])->name('package.list');
+
+    // ***Admin Routes***
+    Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'],  function () {
         // Role Management Routes
         Route::resource('roles', RolesController::class, ['name' => 'roles']);
         Route::resource('users', UsersController::class, ['name' => 'users']);
+        Route::resource('agents', AgentController::class, ['name' => 'agents']);
 
         // Agent Routes
         Route::get('/agent/list', [AgentController::class, 'index'])->name('agents');
@@ -46,10 +62,6 @@ Route::group(['middleware' => ['verified', 'auth']],  function(){
 
         // Application Routes
         Route::get('/application/list', [ApplicationController::class, 'applicationList'])->name('application.list');
-        Route::get('/application/{id}/show', [ApplicationController::class, 'showApplication'])->name('application.show');
-        Route::get('/application/{id}/edit', [ApplicationController::class, 'editApplication'])->name('application.edit');
-        Route::put('/application/{id}/update', [ApplicationController::class, 'update'])->name('application.update');
-        Route::delete('/application/delete/{id}', [ApplicationController::class, 'destroy'])->name('application.destroy');
 
         // Status Routes
         Route::get('/status/list', [StatusController::class, 'index'])->name('status.list');
@@ -57,8 +69,17 @@ Route::group(['middleware' => ['verified', 'auth']],  function(){
         Route::get('/status/{id}/edit', [StatusController::class, 'edit'])->name('status.edit');
         Route::put('/status/{id}/update', [StatusController::class, 'update'])->name('status.update');
         Route::delete('/status/{id}/delete', [StatusController::class, 'destroy'])->name('status.destroy');
-    });
 
+        // Promotional Package Routes
+        Route::post('/promotional-packages/store', [PromotionalPackageController::class, 'store'])->name('package.store');
+        Route::delete('/promotional-packages/{id}/delete', [PromotionalPackageController::class, 'destroy'])->name('package.destroy');
+
+        //Generate PDF Routes
+        Route::post('/generate-pdf/apfid={id}', [ApplicationController::class, 'generatePdf'])->name('generatePdf');
+
+        //Quotation Routes
+        Route::get('/quotation/{id}', [QuotationController::class, 'index'])->name('quotation.create');
+    });
 });
 
 // Application

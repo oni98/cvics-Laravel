@@ -37,7 +37,7 @@
                 <td class="fw-bold">Application Id</td>
                 <td>: {{ $application->code }}</td>
                 <td class="float-right" rowspan="4" colspan="2"><img
-                        src="{{ asset('storage/' . $application->code . '/' . $application->photo) }}" alt=""
+                        src="{{ asset('storage/applications/' . $application->code . '/' . $application->photo) }}" alt=""
                         width="60%"></td>
             </tr>
             <tr>

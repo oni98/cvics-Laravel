@@ -70,7 +70,7 @@
                     </tbody>
                     <tbody v-else>
                         <tr>
-                            <td class="text-center" width="1%">There is no Such Data</td>
+                            <td class="text-center" width="1%">Nothing to Show</td>
                         </tr>
                     </tbody>
                 </table>

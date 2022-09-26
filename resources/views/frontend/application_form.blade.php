@@ -5,6 +5,7 @@
     <div class="card-title">
         <h2>Application Form</h2>
     </div>
+    @include('backend.partials.message')
     <div>
         <form action="{{route('application.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -141,14 +142,18 @@
 
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="ielts">IELTS Score (if any) </label>
-                    <input type="text" name="ielts" class="form-control" id="ielts">
-                </div>
-                <div class="form-group col-md-3">
                     <label for="study_destination">Study Destination (if any) </label>
                     <input type="text" name="study_destination" class="form-control" id="study_destination">
                 </div>
                 <div class="form-group col-md-3">
+                    <label for="proof_of_language">Proof of Language (IELTS/TOEFL/etc) </label>
+                    <input type="text" name="proof_of_language" class="form-control" id="proof_of_language">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="ielts">Language Score (if any) </label>
+                    <input type="text" name="ielts" class="form-control" id="ielts">
+                </div>
+                <div class="form-group col-md-2">
                     <label for="intake_month">Intake Month</label>
                     <select id="intake_month" name="intake_month" class="form-control">
                         <option disabled selected></option>
@@ -156,7 +161,7 @@
                         <option value="September">September</option>
                     </select>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="intake_year">Intake Year</label>
                     <select id="intake_year" name="intake_year" class="form-control">
                         <option disabled selected></option>

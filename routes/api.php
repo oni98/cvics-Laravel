@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\QuotationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('application/list', [ApplicationController::class, 'searchList'])->name('searchList');
+Route::post('invoices/{id}', [QuotationController::class, 'store'])->name('invoice.store');

@@ -5,10 +5,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header row">
-              <div class="col-md-6"><h3 class="card-title">Agent List</h3></div>
-              <div class="col-md-6"><a href="{{route('users.create')}}" class="btn btn-success float-right">Create User</a></div>
-              
-              
+              <div class="col-md-6"><h3 class="card-title">Pending Agents</h3></div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -23,18 +20,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($agents as $agent)
                       <tr>
                         <td>{{ $loop->index+1 }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td>{{ $agent->agency_name }}</td>
+                        <td>{{ $agent->email }}</td>
                         <td>
-                            <a href="{{route('users.edit', $user->id)}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                            <a class="btn btn-danger" href="{{ route('users.destroy', $user->id) }}" class="nav-link"
-                                onclick="event.preventDefault(); document.getElementById('delete-form-{{$user->id}}').submit();">
-                                <i class="fas fa-trash"></i>
+                            <a href="{{url('/admin/agent/approve', $agent->id)}}" class="btn btn-info" title="Approve"><i class="fas fa-check"></i></a>
+                            <a class="btn btn-danger" href="{{ route('agents.destroy', $agent->id) }}" title="Cancel" class="nav-link"
+                                onclick="event.preventDefault(); document.getElementById('delete-form-{{$agent->id}}').submit();">
+                                <i class="fas fa-window-close"></i>
                             </a>
-                            <form id="delete-form-{{$user->id}}" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none;">
+                            <form id="delete-form-{{$agent->id}}" action="{{ route('agents.destroy', $agent->id) }}" method="POST" style="display: none;">
                               @method('DELETE')
                                 @csrf
                             </form>

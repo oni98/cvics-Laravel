@@ -12,8 +12,17 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header text-center">
-                    <div class="float-right"><a href="{{ route('application.edit', $application->id) }}" class="btn btn-info">
-                            Edit </a></div>
+                    {!! Form::open(['route'=> ['generatePdf', $application->id], 'method' => 'POST']) !!}
+                    <div class="float-left"><button type="submit" class="btn btn-info" title="Download PDF"><i class="fas fa-file-pdf"></i></button>
+                        </div>
+                    {!! Form::close() !!}
+                    <div class="float-left ml-2"><a href="{{ route('quotation.create', $application->id) }}"
+                        class="btn btn-info" title="Create Quotation">
+                        <i class="fas fa-file-invoice"></i> </a>
+                    </div>
+                    <div class="float-right"><a href="{{ route('application.edit', $application->id) }}"
+                            class="btn btn-info" title="Edit">
+                            <i class="fas fa-edit"></i> </a></div>
                     <div class="col-md-12 mt-5">
                         <img src="{{ asset('assets/backend/dist/img/application_header.png') }}" alt=""
                             width="100%">
@@ -27,8 +36,8 @@
                             <td class="col-md-3 font-weight-bold">Application Id</td>
                             <td class="col-md-4">{{ $application->code }}</td>
                             <td class="col-md-4" rowspan="4" colspan="2"><img
-                                    src="{{ asset('storage/' . $application->name . '/' . $application->photo) }}" alt=""
-                                    width="100%"></td>
+                                    src="{{ asset('storage/applications/' . $application->code . '/' . $application->photo) }}"
+                                    alt="" width="50%" class="float-right"></td>
                         </tr>
                         <tr>
                             <td class="col-md-3 font-weight-bold">Name</td>
@@ -124,7 +133,11 @@
                             <td class="col-md-4">{{ $application->master_cgpa }}</td>
                         </tr>
                         <tr>
-                            <td class="col-md-3 font-weight-bold">IELTS Score (if any)</td>
+                            <td class="col-md-3 font-weight-bold">Proof of Language</td>
+                            <td class="col-md-4" colspan="3">{{ $application->proof_of_language }}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-3 font-weight-bold">Language Score (if any)</td>
                             <td class="col-md-4">{{ $application->ielts }}</td>
 
                             <td class="col-md-3 font-weight-bold">Study Destination (if any)</td>
@@ -157,12 +170,12 @@
 
                             <td class="col-md-3 font-weight-bold">Referrer Name</td>
                             <td class="col-md-4">
-                              @foreach ($agents as $agent)
+                                @foreach ($agents as $agent)
                                     @if ($agent->id == $application->referrer)
                                         {{ $agent->name }}
                                     @endif
                                 @endforeach
-                              {{-- {{ $application->referrer }} --}}
+                                {{-- {{ $application->referrer }} --}}
                             </td>
                         </tr>
                         <tr>
@@ -187,48 +200,56 @@
                             <td class="col-md-12" colspan="4">{{ $application->comments }}</td>
                         </tr>
                         <tr>
-                          <td>
-                            <a href="{{ asset('storage/'.$application->name.'/'.$application->photo) }}" download> Click to download Photo
-                            </a>
-                          </td>
-                          <td>
-                            <a href="{{ asset('storage/'.$application->name.'/'.$application->passport_info) }}" download> Click to download Passport Info
-                            </a>
-                          </td>
-                          <td colspan="2">
-                            <a href="{{ asset('storage/'.$application->name.'/'.$application->academic_docs) }}" download> Click to download Academic Docs
-                            </a>
-                          </td>
+                            <td>
+                                <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->photo) }}" download>
+                                    Click to download Photo
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->passport_info) }}"
+                                    download> Click to download Passport Info
+                                </a>
+                            </td>
+                            <td colspan="2">
+                                <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->academic_docs) }}"
+                                    download> Click to download Academic Docs
+                                </a>
+                            </td>
                         </tr>
                         <tr>
-                          <td>
-                            <a href="{{ asset('storage/'.$application->name.'/'.$application->resume) }}" download> Click to download Resume
-                            </a>
-                          </td>
-                          <td>
-                            <a href="{{ asset('storage/'.$application->name.'/'.$application->language_proficiency) }}" download> Click to download Language Proficiency
-                            </a>
-                          </td>
-                          <td colspan="2">
-                            <a href="{{ asset('storage/'.$application->name.'/'.$application->personal_statement) }}" download> Click to download Personal Statement
-                            </a>
-                          </td>
+                            <td>
+                                <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->resume) }}" download>
+                                    Click to download Resume
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->language_proficiency) }}"
+                                    download> Click to download Language Proficiency
+                                </a>
+                            </td>
+                            <td colspan="2">
+                                <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->personal_statement) }}"
+                                    download> Click to download Personal Statement
+                                </a>
+                            </td>
                         </tr>
                         <tr>
-                          <td>
-                            <a href="{{ asset('storage/'.$application->name.'/'.$application->research_proposal) }}" download> Click to download Research Proposal
-                            </a>
-                          </td>
-                          <td>
-                            <a href="{{ asset('storage/'.$application->name.'/'.$application->other1) }}" download> Click to download Other1
-                            </a>
-                          </td>
-                          <td colspan="2">
-                            <a href="{{ asset('storage/'.$application->name.'/'.$application->other2) }}" download> Click to download Other2
-                            </a>
-                          </td>
+                            <td>
+                                <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->research_proposal) }}"
+                                    download> Click to download Research Proposal
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->other1) }}" download>
+                                    Click to download Other1
+                                </a>
+                            </td>
+                            <td colspan="2">
+                                <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->other2) }}" download>
+                                    Click to download Other2
+                                </a>
+                            </td>
                         </tr>
-                        </tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->

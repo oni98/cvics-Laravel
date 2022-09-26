@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Mail\applicationEmail;
 use App\Mail\statusEmail;
+use App\Models\Agent;
 use App\Models\Application;
 use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PDF;
@@ -24,7 +26,7 @@ class ApplicationController extends Controller
             function ($q) {
                 $q->where('name', 'agent');
             }
-        )->where('status', '=', '1')->get();
+        )->get();
 
         $earliest_year = Carbon::now()->format('Y');
         return view('frontend.application_form', with(['agents' => $agents, 'earliest_year' => $earliest_year]));
@@ -39,12 +41,17 @@ class ApplicationController extends Controller
         } while (Application::where("code", "=", $code)->first());
 
         $date = Carbon::now()->format('y');
-        $code = $date . $code;
+        $code = 'CVI-' . $date . $code;
 
         $application = $this->patch($application, $request, $code);
 
-        $admin = User::whereHas('roles', function ($q) {$q->where('name', 'admin');})->get();
-        $agents = User::whereHas('roles',function ($q) {$q->where('name', 'agent');})->where('status', '=', '1')->get();
+        $admin = User::whereHas('roles', function ($q) {
+            $q->where('name', 'admin');
+        })->get();
+
+        $agents = User::whereHas('roles', function ($q) {
+            $q->where('name', 'agent');
+        })->get();
 
         $data = [
             'application' => $application,
@@ -52,12 +59,30 @@ class ApplicationController extends Controller
         ];
 
         $pdf = PDF::loadView('pdf.application', $data);
-        Storage::put('public/' . $application->code . '/ApplicationForm.pdf', $pdf->output());
+        Storage::put('public/applications/' . $application->code . '/ApplicationForm.pdf', $pdf->output());
 
         if ($application->save()) {
             Mail::to($request->email)->cc($admin[0]->email)->send(new applicationEmail($application));
+
+            session()->flash('success', 'Application submitted Successfully');
             return redirect('/apply');
         }
+    }
+
+    public function generatePdf($id)
+    {
+        $application = Application::find($id);
+        $agents = User::whereHas('roles', function ($q) {
+            $q->where('name', 'agent');
+        })->get();
+
+        $data = [
+            'application' => $application,
+            'agents' => $agents
+        ];
+
+        $pdf = PDF::loadView('pdf.application', $data);
+        return $pdf->download('ApplicationForm.pdf');
     }
 
     public function update(Request $request, $id)
@@ -65,30 +90,33 @@ class ApplicationController extends Controller
         $application = Application::find($id);
         $prevStatus = $application->status;
         $application = $this->patch($application, $request, $application->code);
-        $application->status = $request->status;
+        $application->status = $request->status ?? $prevStatus;
         $application->comments = $request->comments;
 
         if ($application->save()) {
-            if ($prevStatus != $request->status) {
-                $status = Status::find($request->status);
-                $email = [
-                    'status' => $status->name
-                ];
-                Mail::to($request->email)->send(new statusEmail($email));
+            if (!empty($request->status)) {
+                if ($prevStatus != $request->status) {
+                    $status = Status::find($request->status);
+                    $email = [
+                        'application' => $application,
+                        'status' => $status->name
+                    ];
+                    Mail::to($request->email)->send(new statusEmail($email));
+                }
             }
-
-            return redirect('/admin/application/' . $application->id . '/show');
+            return redirect('/application/' . $application->id . '/show');
         }
     }
 
     /**
      * @param $request
      * @param $application
+     * @param $code
      * @return object
      */
     private function patch($application, $request, $code): object
     {
-        $application->code = 'CVI-'.$code;
+        $application->code = $code;
         $application->name = $request->name;
         $application->mobile = $request->mobile;
         $application->email = $request->email;
@@ -115,6 +143,7 @@ class ApplicationController extends Controller
         $application->master_year = $request->master_year;
         $application->master_institute = $request->master_institute;
         $application->master_cgpa = $request->master_cgpa;
+        $application->proof_of_language = $request->proof_of_language;
         $application->ielts = $request->ielts;
         $application->study_destination = $request->study_destination;
         $application->intake_month = $request->intake_month;
@@ -151,53 +180,47 @@ class ApplicationController extends Controller
     {
         $this->i++;
         if (!empty($image)) {
-            if (file_exists(public_path('storage/' . $application->code . '/' . $image))) {
-                unlink(public_path('storage/' . $application->code . '/' . $image));
+            if ($image_type == 1 && (!empty($application->photo))) {
+                if (file_exists(public_path('storage/applications/' . $application->code . '/' . $application->photo))) {
+                    unlink(public_path('storage/applications/' . $application->code . '/' . $application->photo));
+                }
+            } elseif ($image_type == 2 && (!empty($application->passport_info))) {
+                if (file_exists(public_path('storage/applications/' . $application->code . '/' . $application->passport_info))) {
+                    unlink(public_path('storage/applications/' . $application->code . '/' . $application->passport_info));
+                }
+            } elseif ($image_type == 3 && (!empty($application->academic_docs))) {
+                if (file_exists(public_path('storage/applications/' . $application->code . '/' . $application->academic_docs))) {
+                    unlink(public_path('storage/applications/' . $application->code . '/' . $application->academic_docs));
+                }
+            } elseif ($image_type == 4 && (!empty($application->resume))) {
+                if (file_exists(public_path('storage/applications/' . $application->code . '/' . $application->resume))) {
+                    unlink(public_path('storage/applications/' . $application->code . '/' . $application->resume));
+                }
+            } elseif ($image_type == 5 && (!empty($application->language_proficiency))) {
+                if (file_exists(public_path('storage/applications/' . $application->code . '/' . $application->language_proficiency))) {
+                    unlink(public_path('storage/applications/' . $application->code . '/' . $application->language_proficiency));
+                }
+            } elseif ($image_type == 6 && (!empty($application->personal_statement))) {
+                if (file_exists(public_path('storage/applications/' . $application->code . '/' . $application->personal_statement))) {
+                    unlink(public_path('storage/applications/' . $application->code . '/' . $application->personal_statement));
+                }
+            } elseif ($image_type == 7 && (!empty($application->research_proposal))) {
+                if (file_exists(public_path('storage/applications/' . $application->code . '/' . $application->research_proposal))) {
+                    unlink(public_path('storage/applications/' . $application->code . '/' . $application->research_proposal));
+                }
+            } elseif ($image_type == 8 && (!empty($application->other1))) {
+                if (file_exists(public_path('storage/applications/' . $application->code . '/' . $application->other1))) {
+                    unlink(public_path('storage/applications/' . $application->code . '/' . $application->other1));
+                }
+            } elseif ($image_type == 9 && (!empty($application->other2))) {
+                if (file_exists(public_path('storage/applications/' . $application->code . '/' . $application->other2))) {
+                    unlink(public_path('storage/applications/' . $application->code . '/' . $application->other2));
+                }
+            } else {
             }
-            // } 
-            // elseif ($image_type == 2) {
-            //     if (file_exists(public_path('storage/'.$application->code.'/' . $image))) {
-            //         unlink(public_path('storage/'.$application->code.'/' . $image));
-            //     }
-            // } 
-            // elseif ($image_type == 3) {
-            //     if (file_exists(public_path('storage/'.$application->code.'/' . $image))) {
-            //         unlink(public_path('storage/'.$application->code.'/' . $image));
-            //     }
-            // } 
-            // elseif ($image_type == 4) {
-            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->resume))) {
-            //         unlink(public_path('storage/'.$application->code.'/' . $application->resume));
-            //     }
-            // } 
-            // elseif ($image_type == 5) {
-            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->language_proficiency))) {
-            //         unlink(public_path('storage/'.$application->code.'/' . $application->language_proficiency));
-            //     }
-            // } 
-            // elseif ($image_type == 6) {
-            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->personal_statement))) {
-            //         unlink(public_path('storage/'.$application->code.'/' . $application->personal_statement));
-            //     }
-            // } 
-            // elseif ($image_type == 7) {
-            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->research_proposal))) {
-            //         unlink(public_path('storage/'.$application->code.'/' . $application->research_proposal));
-            //     }
-            // } 
-            // elseif ($image_type == 8) {
-            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->other1))) {
-            //         unlink(public_path('storage/'.$application->code.'/' . $application->other1));
-            //     }
-            // } 
-            // else {
-            //     if (file_exists(public_path('storage/'.$application->code.'/' . $application->other2))) {
-            //         unlink(public_path('storage/'.$application->code.'/' . $application->other2));
-            //     }
-            // }
 
             $image_name = $this->i . '-' . time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('public/' . $application->code . '/', $image_name);
+            $path = $image->storeAs('public/applications/' . $application->code . '/', $image_name);
             return $image_name;
         } else {
             if ($image_type == 1) {
@@ -239,7 +262,7 @@ class ApplicationController extends Controller
             function ($q) {
                 $q->where('name', 'agent');
             }
-        )->where('status', '=', '1')->get();
+        )->get();
         return view('backend.application.application_view', ['application' => $application, 'agents' => $agents, 'status' => $status]);
     }
 
@@ -251,7 +274,7 @@ class ApplicationController extends Controller
             function ($q) {
                 $q->where('name', 'agent');
             }
-        )->where('status', '=', '1')->get();
+        )->get();
 
         $status = Status::all();
 
@@ -278,34 +301,32 @@ class ApplicationController extends Controller
         return back();
     }
 
-    public function checkStatus(){
+    public function checkStatus()
+    {
         return view('frontend.check_status');
     }
 
-    public function searchList(Request $request){
-       
+    public function searchList(Request $request)
+    {
+
         $code = !empty($request->code) ? $request->code : '';
         $passport = !empty($request->passport) ? $request->passport : '';
 
-        // if(($code != '') && ($passport != '')){
         $application = Application::with(['status'])->where([['code', $code], ['passport', $passport]])->first();
-        //  dd($application);
-        // }
-        
-        // if ($code != '') {
-        //     $application = $application->where('code', $code);
-        // }
-        // if ($passport != '') {
-        //     $application = $application->where('passport', $passport);
-        // }
-        
-        // $application = $application->get();
-        
+
         $data = [
             'data' => $application,
             'status' => 'ok',
             'code' => 200
         ];
         return response()->json($data);
+    }
+
+    public function referredApplication($id){
+        $user_id = User::find(base64_decode($id));
+        $agent = Agent::find($user_id->agent_id);
+        $earliest_year = Carbon::now()->format('Y');
+        return view('frontend.referred_application_form', with(['agent' => $agent, 'user'=>$user_id, 'earliest_year' => $earliest_year]));
+    
     }
 }
