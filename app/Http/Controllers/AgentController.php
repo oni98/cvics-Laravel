@@ -111,6 +111,7 @@ class AgentController extends Controller
         $user->city = $request->city;
         $user->country = $request->country;
         $user->zipcode = $request->zipcode;
+        $user->web_address = $request->web_address;
 
         $user->logo = $this->image($user, $request->logo, 1);
         $user->license = $this->image($user, $request->license, 2);

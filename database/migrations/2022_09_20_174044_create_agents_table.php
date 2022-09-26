@@ -26,6 +26,7 @@ class CreateAgentsTable extends Migration
             $table->string('city');
             $table->string('country');
             $table->string('zipcode');
+            $table->string('web_address')->nullable();
             $table->string('logo');
             $table->string('license');
             $table->string('nid_or_passport');

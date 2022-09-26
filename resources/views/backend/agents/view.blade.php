@@ -61,21 +61,26 @@
                             <td class="col-md-3 font-weight-bold">Zipcode</td>
                             <td class="col-md-4">{{ $agent->zipcode }}</td>
                         </tr>
+                        <tr>
+                            <td class="col-md-3 font-weight-bold">Web Address</td>
+                            <td class="col-md-4">{{ $agent->web_address }}</td>
+
+                            <td colspan="2">
+                                <a href="{{ asset('storage/agents/' . $agent->email . '/' . $agent->nid_or_passport) }}"
+                                    download> Click to download NID/Passport
+                                </a>
+                            </td>
+                        </tr>
                         
                         <tr>
-                            <td>
+                            <td colspan="2">
                                 <a href="{{ asset('storage/agents/' . $agent->email . '/' . $agent->logo) }}" download>
                                     Click to download Logo/Photo
                                 </a>
                             </td>
-                            <td>
+                            <td colspan="2">
                                 <a href="{{ asset('storage/agents/' . $agent->email . '/' . $agent->license) }}"
                                     download> Click to download License
-                                </a>
-                            </td>
-                            <td colspan="2">
-                                <a href="{{ asset('storage/agents/' . $agent->email . '/' . $agent->nid_or_passport) }}"
-                                    download> Click to download NID/Passport
                                 </a>
                             </td>
                         </tr>

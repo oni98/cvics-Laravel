@@ -168,6 +168,29 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
+                                    <label for="web_address" class="col-form-label text-md-end">{{ __('Website Address') }}</label>
+                                    <input id="zipcode" type="text"
+                                        class="form-control @error('web_address') is-invalid @enderror" name="web_address"
+                                        value="{{ old('web_address') }}" required autocomplete="name" autofocus>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="nid_or_passport"
+                                        class="col-form-label text-md-end">{{ __('NID or Passport') }}</label>
+                                    <input id="nid_or_passport" type="file"
+                                        class="form-control @error('nid_or_passport') is-invalid @enderror"
+                                        name="nid_or_passport" value="{{ old('nid_or_passport') }}" required
+                                        autocomplete="nid_or_passport" autofocus>
+
+                                    @error('nid_or_passport')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
                                     <label for="logo"
                                         class="col-form-label text-md-end">{{ __('Logo or Photo') }}</label>
                                     <input id="logo" type="file"
@@ -187,22 +210,6 @@
                                         value="{{ old('license') }}" required autocomplete="license" autofocus>
 
                                     @error('license')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <label for="nid_or_passport"
-                                        class="col-form-label text-md-end">{{ __('NID or Passport') }}</label>
-                                    <input id="nid_or_passport" type="file"
-                                        class="form-control @error('nid_or_passport') is-invalid @enderror"
-                                        name="nid_or_passport" value="{{ old('nid_or_passport') }}" required
-                                        autocomplete="nid_or_passport" autofocus>
-
-                                    @error('nid_or_passport')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
