@@ -9,6 +9,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\PromotionalPackageController;
 use App\Http\Controllers\QuotationController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -21,6 +22,10 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/link-storage', function () {
+    Artisan::call('storage:link');
+});
 
 Route::get('/', function () {
     return view('welcome');
