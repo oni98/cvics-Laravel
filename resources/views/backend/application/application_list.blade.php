@@ -33,7 +33,7 @@
                             @foreach ($applications as $application)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>CVI-2022{{ $application->code }}</td>
+                                    <td>{{ $application->code }}</td>
                                     <td>{{ $application->name }}</td>
                                     <td>{{ $application->email }}</td>
                                     <td>{{ $application->mobile }}</td>
@@ -52,7 +52,7 @@
                                     <td>
                                         <a href="{{ route('application.show', $application->id) }}" class="btn btn-success"
                                             title="Show Details"><i class="fas fa-eye"></i></a>
-
+                                    @role('admin')
                                         <a href="{{ route('application.edit', $application->id) }}" class="btn btn-info"
                                             title="Edit"><i class="fas fa-edit"></i></a>
 
@@ -68,6 +68,7 @@
                                             @method('DELETE')
                                             @csrf
                                         </form>
+                                    @endrole
                                     </td>
                                 </tr>
                             @endforeach

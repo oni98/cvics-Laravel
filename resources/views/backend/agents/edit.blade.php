@@ -12,10 +12,6 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header text-center">
-                    <div class="float-right"><a href="{{ route('agent.edit', $agent->id) }}" class="btn btn-info"
-                            title="Edit">
-                            <i class="fas fa-edit"></i> </a>
-                    </div>
                     <div class="col-md-12 mt-5">
                         <img src="{{ asset('assets/backend/dist/img/application_header.png') }}" alt=""
                             width="100%">
@@ -24,6 +20,9 @@
                 <!-- /.card-header -->
                 <div class="card-body table-responsive ">
                     @include('backend.partials.message')
+                    <form action="{{route('agent.update', $agent->id)}}" method="POST" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
                     <table id="example1" class="table table-bordered table-striped">
                         <tr>
                             <td class="col-md-3 font-weight-bold">Agent ID</td>
@@ -34,64 +33,73 @@
                         </tr>
                         <tr>
                             <td class="col-md-3 font-weight-bold">Agency Name</td>
-                            <td class="col-md-4">{{ $agent->agency_name }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="agency_name" value="{{ $agent->agency_name }}"></td>
+                            
                         </tr>
                         <tr>
                             <td class="col-md-3 font-weight-bold">Email</td>
-                            <td class="col-md-4">{{ $agent->email }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="email" value="{{ $agent->email }}"></td>
                         </tr>
                         <tr>
                             <td class="col-md-3 font-weight-bold">Contact Person</td>
-                            <td class="col-md-4">{{ $agent->contact_person }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="contact_person" value="{{ $agent->contact_person }}"></td>
                         </tr>
                         <tr>
                             <td class="col-md-3 font-weight-bold">Designation</td>
-                            <td class="col-md-4">{{ $agent->designation }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="designation" value="{{ $agent->designation }}"></td>
 
                             <td class="col-md-3 font-weight-bold">Web Address</td>
-                            <td class="col-md-4">{{ $agent->web_address }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="web_address" value="{{ $agent->web_address }}"></td>
                         </tr>
                         <tr>
                             <td class="col-md-3 font-weight-bold">Contact No</td>
-                            <td class="col-md-4">{{ $agent->phone }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="phone" value="{{ $agent->phone }}"></td>
 
                             <td class="col-md-3 font-weight-bold">Skype</td>
-                            <td class="col-md-4">{{ $agent->skype }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="skype" value="{{ $agent->skype }}"></td>
                         </tr>
                         <tr>
                             <td class="col-md-3 font-weight-bold">Address</td>
-                            <td class="col-md-4">{{ $agent->address }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="address" value="{{ $agent->address }}"></td>
 
                             <td class="col-md-3 font-weight-bold">City</td>
-                            <td class="col-md-4">{{ $agent->city }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="city" value="{{ $agent->city }}"></td>
                         </tr>
                         <tr>
                             <td class="col-md-3 font-weight-bold">Country</td>
-                            <td class="col-md-4">{{ $agent->country }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="country" value="{{ $agent->country }}"></td>
 
                             <td class="col-md-3 font-weight-bold">Zipcode</td>
-                            <td class="col-md-4">{{ $agent->zipcode }}</td>
+                            <td class="col-md-4"><input type="text" class="form-control" name="zipcode" value="{{ $agent->zipcode }}"></td>
                         </tr>
                         <tr>
                             <td>
                                 <a href="{{ asset('storage/agents/' . $agent->code . '/' . $agent->nid_or_passport) }}"
                                     download> Click to download NID/Passport
                                 </a>
+                                <input type="file" class="file-form-control" name="nid_or_passport">
                             </td>
 
                             <td>
                                 <a href="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" download>
                                     Click to download Logo/Photo
                                 </a>
+                                <input type="file" class="file-form-control" name="logo">
                             </td>
                             <td colspan="2">
                                 <a href="{{ asset('storage/agents/' . $agent->code . '/' . $agent->license) }}" download>
                                     Click to download License
                                 </a>
+                                <input type="file" class="file-form-control" name="license">
                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><button type="submit"
+                                    class="btn btn-success btn-block">Update</button></td>
                         </tr>
                         </tbody>
                     </table>
+                    </form>
                 </div>
                 <!-- /.card-body -->
             </div>

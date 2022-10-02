@@ -197,7 +197,7 @@
                                     <td>
                                         <select id="intake_year" name="intake_year" class="form-control">
                                             <option disabled selected></option>
-                                            @foreach (range(date('Y') + 5, $earliest_year) as $x)
+                                            @foreach (array_reverse(range((date('Y')+5), $earliest_year)) as $x)
                                                 <option value="{{ $x }}"
                                                     {{ $x == $application->intake_year ? 'selected' : '' }}>
                                                     {{ $x }}</option>
@@ -255,7 +255,16 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="font-weight-bold">Work Experience</td>
+                                    <td class="font-weight-bold">Working Place</td>
+                                    <td><input class="form-control" type="text" name="working_place"
+                                            value="{{ $application->working_place }}"></td>
+
+                                    <td class="font-weight-bold">Worked As (Position)</td>
+                                    <td><input class="form-control" type="text" name="working_position"
+                                            value="{{ $application->working_position }}"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Duration (Experience)</td>
                                     <td><input class="form-control" type="text" name="experience"
                                             value="{{ $application->experience }}"></td>
 

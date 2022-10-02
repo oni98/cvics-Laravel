@@ -23,9 +23,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/link-storage', function () {
-    Artisan::call('storage:link');
-});
+// Route::get('/link-storage', function () {
+//     Artisan::call('storage:link');
+// });
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,9 +46,6 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
     // Application Routes for Agent
     Route::get('/applications', [AgentController::class, 'applicationList'])->name('agent.application.list');
     Route::get('/application/{id}/show', [ApplicationController::class, 'showApplication'])->name('application.show');
-    Route::get('/application/{id}/edit', [ApplicationController::class, 'editApplication'])->name('application.edit');
-    Route::put('/application/{id}/update', [ApplicationController::class, 'update'])->name('application.update');
-    Route::delete('/application/delete/{id}', [ApplicationController::class, 'destroy'])->name('application.destroy');
 
     // Promotional Package Routes
     Route::get('/promotional-packages', [PromotionalPackageController::class, 'index'])->name('package.list');
@@ -62,11 +59,16 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
 
         // Agent Routes
         Route::get('/agent/list', [AgentController::class, 'index'])->name('agents');
+        Route::get('/agent/{id}/edit', [AgentController::class, 'edit'])->name('agent.edit');
+        Route::put('/agent/{id}/update', [AgentController::class, 'update'])->name('agent.update');
         Route::get('/agent/pending', [AgentController::class, 'pendingAgent'])->name('pendingAgents');
         Route::get('/agent/approve/{id}', [AgentController::class, 'approveAgent'])->name('agentApprove');
 
         // Application Routes
         Route::get('/application/list', [ApplicationController::class, 'applicationList'])->name('application.list');
+        Route::get('/application/{id}/edit', [ApplicationController::class, 'editApplication'])->name('application.edit');
+        Route::put('/application/{id}/update', [ApplicationController::class, 'update'])->name('application.update');
+        Route::delete('/application/delete/{id}', [ApplicationController::class, 'destroy'])->name('application.destroy');
 
         // Status Routes
         Route::get('/status/list', [StatusController::class, 'index'])->name('status.list');
@@ -84,6 +86,7 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
 
         //Quotation Routes
         Route::get('/quotation/{id}', [QuotationController::class, 'index'])->name('quotation.create');
+        Route::delete('/quotation/delete/{id}', [QuotationController::class, 'destroy'])->name('quotation.destroy');
     });
 });
 

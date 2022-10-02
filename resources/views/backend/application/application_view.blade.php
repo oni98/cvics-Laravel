@@ -12,6 +12,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header text-center">
+                @role('admin')
                     {!! Form::open(['route'=> ['generatePdf', $application->id], 'method' => 'POST']) !!}
                     <div class="float-left"><button type="submit" class="btn btn-info" title="Download PDF"><i class="fas fa-file-pdf"></i></button>
                         </div>
@@ -22,11 +23,14 @@
                     </div>
                     <div class="float-right"><a href="{{ route('application.edit', $application->id) }}"
                             class="btn btn-info" title="Edit">
-                            <i class="fas fa-edit"></i> </a></div>
+                            <i class="fas fa-edit"></i> </a>
+                    </div>
+                @endrole
                     <div class="col-md-12 mt-5">
                         <img src="{{ asset('assets/backend/dist/img/application_header.png') }}" alt=""
                             width="100%">
                     </div>
+                
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -179,7 +183,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="col-md-3 font-weight-bold">Work Experience</td>
+                            <td class="col-md-3 font-weight-bold">Working Place</td>
+                            <td class="col-md-4">{{ $application->working_place }}</td>
+
+                            <td class="col-md-3 font-weight-bold">Worked As (Position)</td>
+                            <td class="col-md-4">{{ $application->working_position }}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-3 font-weight-bold">Duration (Experience)</td>
                             <td class="col-md-4">{{ $application->experience }}</td>
 
                             <td class="col-md-3 font-weight-bold">Status</td>

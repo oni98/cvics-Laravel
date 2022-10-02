@@ -35,8 +35,8 @@
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('storage/agents/' . $agent->email . '/' . $agent->logo) }}" class="" alt="CVICS"
-                            height="100px" width="150px">
+                        <img src="{{ asset('storage/agents/' . $agent->email . '/' . $agent->logo) }}" class=""
+                            alt="CVICS" height="100px" width="150px">
                     </a>
                 </div>
             </nav>
@@ -234,7 +234,7 @@
                                     <label for="intake_year">Intake Year</label>
                                     <select id="intake_year" name="intake_year" class="form-control">
                                         <option disabled selected></option>
-                                        @foreach (range(date('Y') + 5, $earliest_year) as $x)
+                                        @foreach (array_reverse(range(date('Y') + 5, $earliest_year)) as $x)
                                             <option value="{{ $x }}">{{ $x }}</option>
                                         @endforeach
                                     </select>
@@ -288,7 +288,19 @@
                                     <input type="text" class="form-control" id="remarks" name="remarks">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="experience">Work Experience</label>
+                                    <label for="working_place">Working Place</label>
+                                    <input type="text" name="working_place" class="form-control" id="working_place">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="working_position">Worked As (Position)</label>
+                                    <input type="text" name="working_position" class="form-control"
+                                        id="working_position">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="experience">Duration (Experience)</label>
                                     <input type="text" name="experience" class="form-control" id="experience">
                                 </div>
                             </div>

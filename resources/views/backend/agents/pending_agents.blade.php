@@ -14,6 +14,7 @@
                 <thead>
                 <tr>
                   <th>SL</th>
+                  <th>Agent ID</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Action</th>
@@ -23,6 +24,7 @@
                     @foreach ($agents as $agent)
                       <tr>
                         <td>{{ $loop->index+1 }}</td>
+                        <td>{{ $agent->code }}</td>
                         <td>{{ $agent->agency_name }}</td>
                         <td>{{ $agent->email }}</td>
                         <td>

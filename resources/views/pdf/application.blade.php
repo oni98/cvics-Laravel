@@ -32,7 +32,7 @@
         <img src="{{ asset('assets/backend/dist/img/application_header.png') }}" alt="" width="100%">
     </div>
     <div>
-        <table class="table-striped">
+        <table>
             <tr>
                 <td class="fw-bold">Application Id</td>
                 <td>: {{ $application->code }}</td>
@@ -175,11 +175,19 @@
                 </td>
             </tr>
             <tr>
+                <td class="fw-bold">Working Place</td>
+                <td>: {{ $application->working_place }}</td>
+            </tr>
+            <tr>
+                <td class="fw-bold">Worked As (Position)</td>
+                <td>: {{ $application->working_position }}</td>
+            
+                <td class="fw-bold">Duration (Experience)</td>
+                <td>: {{ $application->experience }}</td>
+            </tr>
+            <tr>
                 <td class="fw-bold">Remarks</td>
                 <td>: {{ $application->remarks }}</td>
-                
-                <td class="fw-bold">Work Experience</td>
-                <td>: {{ $application->experience }}</td>
             </tr>
             </tbody>
         </table>

@@ -79,6 +79,12 @@
                                         v-model="form_data.q_due_date"></div>
                             </div>
                             <div class="row">
+                                <div class="col-md-3">Currency</div>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-8"><input type="text" class="form-control invoice-details"
+                                        v-model="form_data.currency"></div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-3">Grand Amount</div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-8"><input type="text" class="form-control invoice-details"
@@ -130,8 +136,8 @@
                                     <td></td>
                                     <td></td>
                                     <td class="text-right">Total</td>
-                                    <td style="text-align: right; padding-right: 30px;width: 230px">BDT
-                                        @{{ form_data.total }}</td>
+                                    <td style="text-align: right; padding-right: 30px;width: 230px">
+                                        @{{ form_data.currency + ' ' + form_data.total }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="5" class="text-right">
@@ -148,11 +154,16 @@
                                     </td>
                                     <td
                                         style="text-align: right; padding-right: 30px; font-weight: bold; font-size: 16px;width: 230px">
-                                        BDT @{{ form_data.q_grand_amount }}
+                                        @{{ form_data.currency + ' ' + form_data.q_grand_amount }}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+
+                        <div class="my-5">
+                            <label for="tnc">Terms and Conditions</label>
+                            <textarea v-model="form_data.tnc" id="tnc" class="form-control" rows="2"></textarea>
+                        </div>
                     </div>
                     <button type="button" v-on:click="addInvoice"
                         class="btn btn-primary submit-btn float-right">Generate Quotation</button>
@@ -169,6 +180,7 @@
                                 <th>SL</th>
                                 <th>Date</th>
                                 <th>Quotation (Click to Download)</th>
+                                <th>Action</th>
                             </thead>
                             <tbody>
                                 @foreach ($quotations as $quot)
@@ -180,6 +192,20 @@
                                                 download title="Click to Download">
                                                 <i class="fas fa-file-pdf"></i>
                                             </a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger"
+                                            href="{{ route('quotation.destroy', $quot->id) }}" class="nav-link"
+                                            title="Delete"
+                                            onclick="event.preventDefault(); document.getElementById('delete-form-{{ $quot->id }}').submit();">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                        <form id="delete-form-{{ $quot->id }}"
+                                            action="{{ route('quotation.destroy', $quot->id) }}" method="POST"
+                                            style="display: none;">
+                                            @method('DELETE')
+                                            @csrf
+                                        </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -206,7 +232,9 @@
                     q_due_date: '',
                     q_grand_amount: 0,
                     total: 0,
-                    discount: ''
+                    discount: '',
+                    currency: '',
+                    tnc: ''
                 },
                 invoiceItems: [{
                     description: '',
@@ -278,9 +306,6 @@
 
                     });
                 },
-            },
-            created: function() {
-
             }
         });
     </script>

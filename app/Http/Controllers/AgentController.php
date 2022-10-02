@@ -40,7 +40,12 @@ class AgentController extends Controller
         ]);
 
         $user = new Agent();
-        $user = $this->patch($user, $request);
+        do {
+            $code = random_int(100000, 999999);
+        } while (Application::where("code", "=", $code)->first());
+        $code = 'CVIA-'. $code;
+
+        $user = $this->patch($user, $request, $code);
         $user->save();
 
         // $user->assignRole('agent');
@@ -61,6 +66,18 @@ class AgentController extends Controller
         return view('backend.agents.view', ['agent'=> $agent]);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $agent = Agent::find($id);
+        return view('backend.agents.edit', ['agent'=> $agent]);
+    }
+
     
     public function applicationList()
     {
@@ -79,18 +96,23 @@ class AgentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = Agent::find($id);
+        $agent = Agent::find($id);
+        
+
         // Validation
         $request->validate([
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|min:6|confirmed'
+            'email' => 'required|email|unique:agents,email,'.$id,
         ]);
 
-        $user = $this->patch($user, $request);
-        $user->save();
+        $agent = $this->patch($agent, $request, $agent->code);
 
-        session()->flash('success', 'Agent has been Updated');
-        return redirect('/admin/users');
+        if($agent->save()){
+            $user = User::where('agent_id',$id)->first();
+            $user->email = $agent->email;
+            $user->save();
+            session()->flash('success', 'Agent has been Updated');
+            return back();
+        }
     }
 
     /**
@@ -99,8 +121,9 @@ class AgentController extends Controller
      * @param $code
      * @return object
      */
-    private function patch($user, $request): object
+    private function patch($user, $request, $code): object
     {
+        $user->code = $code;
         $user->agency_name = $request->agency_name;
         $user->email = $request->email;
         $user->contact_person = $request->contact_person;
@@ -133,21 +156,21 @@ class AgentController extends Controller
         $this->i++;
         if (!empty($image)) {
             if ($image_type == 1 && (!empty($user->logo))) {
-                if (file_exists(public_path('storage/agents/' . $user->email . '/' . $user->logo))) {
-                    unlink(public_path('storage/agents/' . $user->email . '/' . $user->logo));
+                if (file_exists(public_path('storage/agents/' . $user->code . '/' . $user->logo))) {
+                    unlink(public_path('storage/agents/' . $user->code . '/' . $user->logo));
                 }
             } elseif ($image_type == 2 && (!empty($user->license))) {
-                if (file_exists(public_path('storage/agents/' . $user->email . '/' . $user->license))) {
-                    unlink(public_path('storage/agents/' . $user->email . '/' . $user->license));
+                if (file_exists(public_path('storage/agents/' . $user->code . '/' . $user->license))) {
+                    unlink(public_path('storage/agents/' . $user->code . '/' . $user->license));
                 }
             } elseif ($image_type == 2 && (!empty($user->nid_or_passport))) {
-                if (file_exists(public_path('storage/agents/' . $user->email . '/' . $user->nid_or_passport))) {
-                    unlink(public_path('storage/agents/' . $user->email . '/' . $user->nid_or_passport));
+                if (file_exists(public_path('storage/agents/' . $user->code . '/' . $user->nid_or_passport))) {
+                    unlink(public_path('storage/agents/' . $user->code . '/' . $user->nid_or_passport));
                 }
             } else {}
 
             $image_name = $this->i . '-' . time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('public/agents/' . $user->email . '/', $image_name);
+            $path = $image->storeAs('public/agents/' . $user->code . '/', $image_name);
             return $image_name;
         } else {
             if ($image_type == 1) {

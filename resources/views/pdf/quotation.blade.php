@@ -18,7 +18,9 @@
 
         .border {
             border: 2px solid rgb(207, 207, 207);
-            height: 80px;
+            margin-bottom: 50px;
+            word-break:break-all;
+            word-wrap:break-word;
             margin-bottom: 50px;
         }
 
@@ -28,7 +30,6 @@
         }
 
         .position {
-            bottom: 20px;
             width: 100%;
             height: 200px;
         }
@@ -46,48 +47,48 @@
                 <tr>
                     <td>Name</td>
                     <td>: {{ $applicant->name }}</td>
-
+                    <td style="width: 100px"></td>
                     <td>Quotation Date</td>
                     <td>: {{ $invoice->q_date }}</td>
                 </tr>
                 <tr>
                     <td>Passport No</td>
                     <td>: {{ $applicant->passport }}</td>
-
+                    <td style="width: 100px"></td>
                     <td>Status</td>
                     <td>: {{ $invoice->q_status }}</td>
                 </tr>
                 <tr>
                     <td>Address</td>
                     <td>: {{ $applicant->address }}</td>
-
+                    <td style="width: 100px"></td>
                     <td>Quotation No</td>
                     <td>: {{ $invoice->q_id }}</td>
                 </tr>
                 <tr>
                     <td>Phone</td>
                     <td>: {{ $applicant->mobile }}</td>
-
+                    <td style="width: 100px"></td>
                     <td>Customer ID</td>
                     <td>: {{ $applicant->code }}</td>
                 </tr>
                 <tr>
                     <td>Email</td>
                     <td>: {{ $applicant->email }}</td>
-
+                    <td style="width: 100px"></td>
                     <td>Due Date</td>
                     <td>: {{ $invoice->q_due_date }}</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
-
+                    <td style="width: 100px"></td>
                     <td>Grand Amount</td>
-                    <td>: BDT {{ number_format($invoice->q_grand_amount) }}</td>
+                    <td>: {{ $invoice->currency }} {{ number_format($invoice->q_grand_amount) }}</td>
                 </tr>
             </table>
         </div>
-        <div style="margin-bottom: 150px">
+        <div style="margin-bottom: 150px; margin-top: 50px">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -105,9 +106,9 @@
                             <td>{{ $loop->index + 1 }}</td>
                             <td>{{ $item['description'] }}</td>
                             <td>{{ $item['quantity'] }}</td>
-                            <td>{{ number_format($item['price']) }}</td>
+                            <td>{{ $invoice->currency }} {{ number_format($item['price']) }}</td>
                             <td>{{ $item['tax'] }}</td>
-                            <td>{{ number_format($item['amount']) }}</td>
+                            <td>{{ $invoice->currency }} {{ number_format($item['amount']) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -116,8 +117,8 @@
                 <tbody>
                     <tr>
                         <td class="text-right">Total:</td>
-                        <td style="text-align: right; padding-right: 30px;width: 200px">BDT
-                            {{ number_format($invoice->total) }}</td>
+                        <td style="text-align: right; padding-right: 30px;width: 200px">
+                            {{ $invoice->currency }} {{ number_format($invoice->total) }}</td>
                     </tr>
                     <tr>
                         <td class="text-right">
@@ -132,7 +133,7 @@
                             Grand Total:
                         </td>
                         <td style="text-align: right; padding-right: 30px;width: 200px">
-                            BDT {{ number_format($invoice->q_grand_amount) }}
+                            {{ $invoice->currency }} {{ number_format($invoice->q_grand_amount) }}
                         </td>
                     </tr>
                 </tbody>
@@ -141,6 +142,7 @@
         <div class="position">
             <div class="border">
                 <h6>Terms and Conditions:</h6>
+                <p>{{ $invoice->tnc }}</p>
             </div>
             <div class="sign" style="float: left">
                 <p>Prepared By</p>

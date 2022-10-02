@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\applicationConfirmMail;
 use App\Mail\applicationEmail;
 use App\Mail\statusEmail;
 use App\Models\Agent;
@@ -34,6 +35,7 @@ class ApplicationController extends Controller
 
     public function store(Request $request)
     {
+ 
         $application = new Application();
 
         do {
@@ -44,7 +46,7 @@ class ApplicationController extends Controller
         $code = 'CVI-' . $date . $code;
 
         $application = $this->patch($application, $request, $code);
-
+       
         $admin = User::whereHas('roles', function ($q) {
             $q->where('name', 'admin');
         })->get();
@@ -59,13 +61,16 @@ class ApplicationController extends Controller
         ];
 
         $pdf = PDF::loadView('pdf.application', $data);
+       
+        $pdf->download('ApplicationForm.pdf'); 
+        
         Storage::put('public/applications/' . $application->code . '/ApplicationForm.pdf', $pdf->output());
-
         if ($application->save()) {
-            Mail::to($request->email)->cc($admin[0]->email)->send(new applicationEmail($application));
+            Mail::to($admin[0]->email)->send(new applicationEmail($application));
+            Mail::to($request->email)->send(new applicationConfirmMail($application));
 
             session()->flash('success', 'Application submitted Successfully');
-            return redirect('/apply');
+            return back();
         }
     }
 
@@ -156,6 +161,8 @@ class ApplicationController extends Controller
         $application->referrer = $request->referrer;
         $application->remarks = $request->remarks;
         $application->experience = $request->experience;
+        $application->working_position = $request->working_position;
+        $application->working_place = $request->working_place;
 
         $application->photo = $this->image($application, $request->photo, 1);
         $application->passport_info = $this->image($application, $request->passport_info, 2);
@@ -290,7 +297,6 @@ class ApplicationController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         $application = Application::find($id);
 
         if (!is_null($application)) {

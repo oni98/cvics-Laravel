@@ -55,6 +55,8 @@ class CreateApplicationsTable extends Migration
             $table->bigInteger('referrer')->nullable();
             $table->string('remarks')->nullable();
             $table->string('experience')->nullable();
+            $table->string('working_position')->nullable();
+            $table->string('working_place')->nullable();
             $table->string('photo');
             $table->string('passport_info');
             $table->string('academic_docs');
