@@ -9,6 +9,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\PromotionalPackageController;
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
@@ -87,6 +88,9 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
         //Quotation Routes
         Route::get('/quotation/{id}', [QuotationController::class, 'index'])->name('quotation.create');
         Route::delete('/quotation/delete/{id}', [QuotationController::class, 'destroy'])->name('quotation.destroy');
+
+        // Task Routes
+        Route::resource('task', TaskController::class, ['name' => 'task']);
     });
 });
 

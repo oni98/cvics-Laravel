@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agent;
+use App\Models\Application;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('backend.dashboard');
+        $applications = Application::all()->count();
+        $agents = Agent::where('status',1)->get()->count();
+        $pendingAgents = Agent::where('status',0)->get()->count();
+        $tasks = Task::orderBy('task_date', 'DESC')->paginate(7);
+        $pendingTasks = Task::where('status',0)->count();
+        return view('backend.dashboard',['applications'=>$applications, 'agents'=>$agents, 'pendingAgents'=>$pendingAgents, 'tasks'=>$tasks, 'pendingTasks'=>$pendingTasks]);
     }
 }

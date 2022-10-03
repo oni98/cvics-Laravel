@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('application/list', [ApplicationController::class, 'searchList'])->name('searchList');
 Route::post('invoices/{id}', [QuotationController::class, 'store'])->name('invoice.store');
+
+Route::put('task/status', [TaskController::class, 'statusChange']);
