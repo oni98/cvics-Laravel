@@ -28,16 +28,16 @@
                       <tr>
                         <td>{{ $loop->index+1 }}</td>
                         <td>{{ $user->code }}</td>
-                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->agency_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <a href="{{route('agents.show', $user->agent_id)}}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                            <a href="{{route('agent.edit', $user->agent_id)}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                            <a class="btn btn-danger" href="{{ route('agents.destroy', $user->agent_id) }}" class="nav-link"
-                                onclick="event.preventDefault(); document.getElementById('delete-form-{{$user->agent_id}}').submit();">
+                            <a href="{{route('agents.show', $user->id)}}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <a href="{{route('agent.edit', $user->id)}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                            <a class="btn btn-danger" href="{{ route('agents.destroy', $user->id) }}" class="nav-link"
+                                onclick="event.preventDefault(); document.getElementById('delete-form-{{$user->id}}').submit();">
                                 <i class="fas fa-trash"></i>
                             </a>
-                            <form id="delete-form-{{$user->agent_id}}" action="{{ route('agents.destroy', $user->agent_id) }}" method="POST" style="display: none;">
+                            <form id="delete-form-{{$user->id}}" action="{{ route('agents.destroy', $user->id) }}" method="POST" style="display: none;">
                               @method('DELETE')
                                 @csrf
                             </form>

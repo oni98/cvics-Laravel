@@ -4,7 +4,7 @@
     <title>{{@config('app.name')}}</title>
 </head>
 <body>
-    <h1>Mail from {{@config('app.name')}} ( {{$application['code']}} )</h1>
+    <h1>Mail from {{@config('app.name')}} ( {{$details['application']['code']}} )</h1>
     <p>Dear Applicant {{$details['application']['name']}},</p>
     <p>Your Application status has been changed to "{{ $details['status'] }}"</p>
    

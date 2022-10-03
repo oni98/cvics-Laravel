@@ -51,6 +51,9 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
     // Promotional Package Routes
     Route::get('/promotional-packages', [PromotionalPackageController::class, 'index'])->name('package.list');
 
+    //Quotation Routes
+    Route::get('/quotation/{id}', [QuotationController::class, 'index'])->name('quotation.create');
+
     // ***Admin Routes***
     Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'],  function () {
         // Role Management Routes
@@ -86,7 +89,6 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
         Route::post('/generate-pdf/apfid={id}', [ApplicationController::class, 'generatePdf'])->name('generatePdf');
 
         //Quotation Routes
-        Route::get('/quotation/{id}', [QuotationController::class, 'index'])->name('quotation.create');
         Route::delete('/quotation/delete/{id}', [QuotationController::class, 'destroy'])->name('quotation.destroy');
 
         // Task Routes

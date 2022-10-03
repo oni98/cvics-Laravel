@@ -12,10 +12,6 @@
             background: #eaf7f0;
         }
 
-        .detail-table table tr td {
-            padding: 5px;
-        }
-
         .border {
             border: 2px solid rgb(207, 207, 207);
             margin-bottom: 50px;

@@ -13,7 +13,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="agency_name"
-                                        class="col-form-label text-md-end">{{ __('Agency Name') }}</label>
+                                        class="col-form-label text-md-end">{{ __('Agency Name') }} <span class="text-danger">*</span></label>
                                     <input id="agency_name" type="text"
                                         class="form-control @error('agency_name') is-invalid @enderror" name="agency_name"
                                         value="{{ old('agency_name') }}" required autocomplete="name" autofocus>
@@ -25,7 +25,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="email" class="col-form-label text-md-end">{{ __('Email') }}</label>
+                                    <label for="email" class="col-form-label text-md-end">{{ __('Email') }} <span class="text-danger">*</span></label>
                                     <input id="email" type="text"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -39,7 +39,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="phone" class="col-form-label text-md-end">{{ __('Contact No') }}</label>
+                                    <label for="phone" class="col-form-label text-md-end">{{ __('Contact No') }} <span class="text-danger">*</span></label>
                                     <input id="phone" type="text"
                                         class="form-control @error('phone') is-invalid @enderror" name="phone"
                                         value="{{ old('phone') }}" required autocomplete="name" autofocus>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="contact_person"
-                                        class="col-form-label text-md-end">{{ __('Contact Person') }}</label>
+                                        class="col-form-label text-md-end">{{ __('Contact Person') }} <span class="text-danger">*</span></label>
                                     <input id="contact_person" type="text"
                                         class="form-control @error('contact_person') is-invalid @enderror"
                                         name="contact_person" value="{{ old('contact_person') }}" required
@@ -68,7 +68,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="designation"
-                                        class="col-form-label text-md-end">{{ __('Designation') }}</label>
+                                        class="col-form-label text-md-end">{{ __('Designation') }} <span class="text-danger">*</span></label>
                                     <input id="designation" type="text"
                                         class="form-control @error('designation') is-invalid @enderror" name="designation"
                                         value="{{ old('designation') }}" required autocomplete="name" autofocus>
@@ -80,7 +80,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="skype" class="col-form-label text-md-end">{{ __('Skype') }}</label>
+                                    <label for="skype" class="col-form-label text-md-end">{{ __('Skype') }} <span class="text-danger">*</span></label>
                                     <input id="skype" type="text"
                                         class="form-control @error('skype') is-invalid @enderror" name="skype"
                                         value="{{ old('skype') }}" required autocomplete="name" autofocus>
@@ -94,7 +94,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="address" class="col-form-label text-md-end">{{ __('Address') }}</label>
+                                    <label for="address" class="col-form-label text-md-end">{{ __('Address') }} <span class="text-danger">*</span></label>
                                     <input id="address" type="text"
                                         class="form-control @error('address') is-invalid @enderror" name="address"
                                         value="{{ old('address') }}" required autocomplete="name" autofocus>
@@ -106,7 +106,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="city" class="col-form-label text-md-end">{{ __('City') }}</label>
+                                    <label for="city" class="col-form-label text-md-end">{{ __('City') }} <span class="text-danger">*</span></label>
                                     <input id="city" type="text"
                                         class="form-control @error('city') is-invalid @enderror" name="city"
                                         value="{{ old('city') }}" required autocomplete="name" autofocus>
@@ -120,7 +120,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="country" class="col-form-label text-md-end">{{ __('Country') }}</label>
+                                    <label for="country" class="col-form-label text-md-end">{{ __('Country') }} <span class="text-danger">*</span></label>
                                     <input id="country" type="text"
                                         class="form-control @error('country') is-invalid @enderror" name="country"
                                         value="{{ old('country') }}" required autocomplete="name" autofocus>
@@ -132,7 +132,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="zipcode" class="col-form-label text-md-end">{{ __('Zipcode') }}</label>
+                                    <label for="zipcode" class="col-form-label text-md-end">{{ __('Zipcode') }} <span class="text-danger">*</span></label>
                                     <input id="zipcode" type="text"
                                         class="form-control @error('zipcode') is-invalid @enderror" name="zipcode"
                                         value="{{ old('zipcode') }}" required autocomplete="name" autofocus>
@@ -146,7 +146,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="password" class="col-form-label text-md-end">{{ __('Password') }}</label>
+                                    <label for="password" class="col-form-label text-md-end">{{ __('Password') }} <span class="text-danger">*</span></label>
 
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
@@ -160,7 +160,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="password-confirm"
-                                        class="col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                                        class="col-form-label text-md-end">{{ __('Confirm Password') }} <span class="text-danger">*</span></label>
 
                                     <input id="password-confirm" type="password" class="form-control"
                                         name="password_confirmation" required autocomplete="new-password">
@@ -169,13 +169,13 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="web_address" class="col-form-label text-md-end">{{ __('Website Address') }}</label>
-                                    <input id="zipcode" type="text"
+                                    <input id="web_address" type="text"
                                         class="form-control @error('web_address') is-invalid @enderror" name="web_address"
-                                        value="{{ old('web_address') }}" required autocomplete="name" autofocus>
+                                        value="{{ old('web_address') }}" autocomplete="name" autofocus>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="nid_or_passport"
-                                        class="col-form-label text-md-end">{{ __('NID or Passport') }}</label>
+                                        class="col-form-label text-md-end">{{ __('NID or Passport') }} <span class="text-danger">*</span></label>
                                     <input id="nid_or_passport" type="file"
                                         class="form-control @error('nid_or_passport') is-invalid @enderror"
                                         name="nid_or_passport" value="{{ old('nid_or_passport') }}" required
@@ -192,7 +192,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="logo"
-                                        class="col-form-label text-md-end">{{ __('Logo or Photo') }}</label>
+                                        class="col-form-label text-md-end">{{ __('Logo or Photo') }} <span class="text-danger">*</span></label>
                                     <input id="logo" type="file"
                                         class="form-control @error('logo') is-invalid @enderror" name="logo"
                                         value="{{ old('logo') }}" required autocomplete="logo" autofocus>
@@ -204,7 +204,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="license" class="col-form-label text-md-end">{{ __('License') }}</label>
+                                    <label for="license" class="col-form-label text-md-end">{{ __('License') }} <span class="text-danger">*</span></label>
                                     <input id="license" type="file"
                                         class="form-control @error('license') is-invalid @enderror" name="license"
                                         value="{{ old('license') }}" required autocomplete="license" autofocus>

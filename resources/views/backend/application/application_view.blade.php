@@ -17,10 +17,12 @@
                     <div class="float-left"><button type="submit" class="btn btn-info" title="Download PDF"><i class="fas fa-file-pdf"></i></button>
                         </div>
                     {!! Form::close() !!}
+                @endrole
                     <div class="float-left ml-2"><a href="{{ route('quotation.create', $application->id) }}"
                         class="btn btn-info" title="Create Quotation">
                         <i class="fas fa-file-invoice"></i> </a>
                     </div>
+                @role('admin')
                     <div class="float-right"><a href="{{ route('application.edit', $application->id) }}"
                             class="btn btn-info" title="Edit">
                             <i class="fas fa-edit"></i> </a>

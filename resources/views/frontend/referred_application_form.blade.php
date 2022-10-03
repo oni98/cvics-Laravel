@@ -35,8 +35,8 @@
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('storage/agents/' . $agent->email . '/' . $agent->logo) }}" class=""
-                            alt="CVICS" height="100px" width="150px">
+                        <img src="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" class=""
+                            alt="CVICS" height="100px" width="200px">
                     </a>
                 </div>
             </nav>

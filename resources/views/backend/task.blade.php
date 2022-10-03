@@ -28,8 +28,10 @@
                             <!-- todo text -->
                             <span class="text">{{ $task->task }}</span>
                             <!-- Emphasis label -->
-                            <small class="badge badge-danger"><i class="far fa-clock"></i>
-                                {{ $task->task_date }}</small>
+                            <small class="badge badge-warning"><i class="far fa-clock"></i>
+                                {{ date('g:i a', strtotime($task->task_date)) }}</small>
+                            <small class="badge badge-danger"><i class="far fa-calendar"></i>
+                                {{ date('d-m-Y', strtotime($task->task_date)) }}</small>
                             <!-- General tools such as edit or delete-->
                             <div class="tools">
                                 <a class="text-danger" href="{{ route('task.destroy', $task->id) }}"
@@ -73,8 +75,8 @@
                     </div>
                     <div class="modal-body">
                         <label for="task_date">Expiration Date</label>
-                        <input class="datepicker form-control" id="task_date" data-date-format="dd/mm/yyyy"
-                            placeholder="dd/mm/yyyy" name="task_date" autocomplete="off" required>
+                        <input class="form-control" id="task_date" data-date-format="dd/mm/yyyy"
+                            placeholder="dd/mm/yyyy" name="task_date" autocomplete="off" required type="datetime-local" >
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

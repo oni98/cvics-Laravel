@@ -30,11 +30,12 @@ class QuotationController extends Controller
         ];
         $pdf = PDF::loadView('pdf.quotation', $data);
         $quotation->quotation_pdf = time() . '-Quotation.pdf';
-        Storage::put('public/applications/' . $application->code . '/' . $quotation->quotation_pdf, $pdf->output());
         
-        $quotation->save();
-
-        return $pdf->download($application->code . '-Quotation.pdf');
+        // if(Storage::put('public/applications/' . $application->code . '/' . $quotation->quotation_pdf, $pdf->output())){
+            // if($quotation->save()){
+                return $pdf->download($application->code . '-Quotation.pdf');
+            // }
+        // }
     }
 
     public function destroy($id)

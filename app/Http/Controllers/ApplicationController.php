@@ -67,7 +67,7 @@ class ApplicationController extends Controller
         Storage::put('public/applications/' . $application->code . '/ApplicationForm.pdf', $pdf->output());
         if ($application->save()) {
             Mail::to($admin[0]->email)->send(new applicationEmail($application));
-            Mail::to($request->email)->send(new applicationConfirmMail($application));
+            Mail::to($application->email)->send(new applicationConfirmMail($application));
 
             session()->flash('success', 'Application submitted Successfully');
             return back();
@@ -257,7 +257,8 @@ class ApplicationController extends Controller
     {
         $applications = Application::all();
         $status = Status::all();
-        return view('backend.application.application_list', ['applications' => $applications, 'status' => $status]);
+        $agents = User::all();
+        return view('backend.application.application_list', ['applications' => $applications, 'status' => $status, 'agents'=>$agents]);
     }
 
     public function showApplication($id)

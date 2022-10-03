@@ -4,13 +4,18 @@
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-                <div class="card-header row">
-                    <div class="col-md-6">
+                <div class="card-header">
+                    <div class="float-left">
                         <h3 class="card-title">Application List</h3>
                     </div>
+                    @role('agent')
+                    <div class="float-right">
+                        <a href="{{ route('referred.application', [base64_encode(Auth::user()->id), Auth::user()->name]) }}" class="btn btn-info">Create Application</a>
+                    </div>
+                    @endrole
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     @include('backend.partials.message')
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -21,10 +26,11 @@
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Passport No</th>
-                                <th>Source</th>
+                                <th>Referrer</th>
                                 <th>Intake</th>
                                 <th>University</th>
                                 <th>Country</th>
+                                <th>Applied at</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -38,10 +44,11 @@
                                     <td>{{ $application->email }}</td>
                                     <td>{{ $application->mobile }}</td>
                                     <td>{{ $application->passport }}</td>
-                                    <td>{{ $application->source }}</td>
+                                    <td>{{ $agents[$application->referrer - 1]->name }}</td>
                                     <td>{{ $application->intake_month . ', ' . $application->intake_year }}</td>
                                     <td>{{ $application->prepared_institution1 }}</td>
                                     <td>{{ $application->study_destination }}</td>
+                                    <td>{{ date('d-m-Y | g:i a', strtotime($application->created_at)) }}</td>
                                     <td>
                                         @foreach ($status as $st)
                                             @if ($st->id == $application->status)
@@ -86,7 +93,6 @@
     <script>
         $(function() {
             $("#example1").DataTable({
-                "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
                 "buttons": ["Create user"]

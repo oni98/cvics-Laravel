@@ -17,11 +17,7 @@ class AgentController extends Controller
 
     public function index()
     {
-        $users = User::whereHas(
-            'roles', function($q){
-                $q->where('name', 'agent');
-            }
-        )->get();
+        $users = Agent::where('status',1)->get();
         return view('backend.agents.agents', with(['users'=>$users]));
     }
 
@@ -83,7 +79,8 @@ class AgentController extends Controller
     {
         $applications = Application::where('referrer',Auth::id())->get();
         $status = Status::all();
-        return view('backend.application.application_list', ['applications' => $applications, 'status' => $status]);
+        $agents = User::all();
+        return view('backend.application.application_list', ['applications' => $applications, 'status' => $status, 'agents'=>$agents]);
     }
 
 

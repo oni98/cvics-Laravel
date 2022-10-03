@@ -170,7 +170,7 @@
                 </div>
                 <!-- /.card-body -->
             </div>
-            <div class="card">
+            {{-- <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
                     @include('backend.partials.message')
@@ -180,7 +180,7 @@
                                 <th>SL</th>
                                 <th>Date</th>
                                 <th>Quotation (Click to Download)</th>
-                                <th>Action</th>
+                                @role('admin')<th>Action</th>@endrole
                             </thead>
                             <tbody>
                                 @foreach ($quotations as $quot)
@@ -193,6 +193,7 @@
                                                 <i class="fas fa-file-pdf"></i>
                                             </a>
                                         </td>
+                                    @role('admin')
                                         <td>
                                             <a class="btn btn-danger"
                                             href="{{ route('quotation.destroy', $quot->id) }}" class="nav-link"
@@ -207,6 +208,7 @@
                                             @csrf
                                         </form>
                                         </td>
+                                    @endrole
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -214,7 +216,7 @@
                     </div>
                 </div>
                 <!-- /.card-body -->
-            </div>
+            </div> --}}
             <!-- /.card -->
         </div><!-- /.container-fluid -->
     </section>

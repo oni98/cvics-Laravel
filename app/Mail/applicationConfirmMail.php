@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 class applicationConfirmMail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $application;
 
     /**
      * Create a new message instance.
