@@ -24,4 +24,7 @@ class Agent extends Authenticatable implements MustVerifyEmail
     //     }
     //     return $hasPermission;
     // }
+    public function agent(){
+        return $this->hasOne(Application::class, 'referrer');
+    }
 }

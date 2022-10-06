@@ -47,7 +47,7 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
     // Application Routes for Agent
     Route::get('/applications', [AgentController::class, 'applicationList'])->name('agent.application.list');
     Route::get('/application/{id}/show', [ApplicationController::class, 'showApplication'])->name('application.show');
-
+    Route::get('/application/export-a', [ApplicationController::class, 'agentExcelExport'])->name('agent.application.excel');
     // Promotional Package Routes
     Route::get('/promotional-packages', [PromotionalPackageController::class, 'index'])->name('package.list');
 
@@ -73,6 +73,7 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
         Route::get('/application/{id}/edit', [ApplicationController::class, 'editApplication'])->name('application.edit');
         Route::put('/application/{id}/update', [ApplicationController::class, 'update'])->name('application.update');
         Route::delete('/application/delete/{id}', [ApplicationController::class, 'destroy'])->name('application.destroy');
+        Route::get('/application/export', [ApplicationController::class, 'excelExport'])->name('application.excel');
 
         // Status Routes
         Route::get('/status/list', [StatusController::class, 'index'])->name('status.list');

@@ -60,4 +60,8 @@ class Application extends Model
     public function status(){
         return $this->belongsTo(Status::class, 'status');
     }
+
+    public function agent(){
+        return $this->belongsTo(Agent::class, 'referrer');
+    }
 }

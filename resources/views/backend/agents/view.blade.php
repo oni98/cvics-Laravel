@@ -31,7 +31,6 @@
                                 @csrf
                             </form>
                         @endif
-
                     </div>
                     <div class="col-md-12 mt-5">
                         <img src="{{ asset('assets/backend/dist/img/application_header.png') }}" alt=""

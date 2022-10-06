@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AgentApplicationExport;
 use App\Mail\applicationConfirmMail;
 use App\Mail\applicationEmail;
 use App\Mail\statusEmail;
@@ -15,6 +16,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PDF;
+use App\Exports\ApplicationExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ApplicationController extends Controller
 {
@@ -89,6 +92,14 @@ class ApplicationController extends Controller
 
         $pdf = PDF::loadView('pdf.application', $data);
         return $pdf->download('ApplicationForm.pdf');
+    }
+
+    public function excelExport(){
+        return Excel::download(new ApplicationExport, 'Application List.xlsx');
+    }
+
+    public function agentExcelExport(){
+        return Excel::download(new AgentApplicationExport, 'Application List.xlsx');
     }
 
     public function update(Request $request, $id)

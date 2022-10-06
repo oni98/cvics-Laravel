@@ -17,6 +17,12 @@
                 <!-- /.card-header -->
                 <div class="card-body table-responsive">
                     @include('backend.partials.message')
+                    @role('admin')
+                    <a class="btn btn-success" href="{{route('application.excel')}}" title="Export as Excel"><i class="fas fa-file-excel"></i></a>
+                    @endrole
+                    @role('agent')
+                    <a class="btn btn-success" href="{{route('agent.application.excel')}}" title="Export as Excel"><i class="fas fa-file-excel"></i></a>
+                    @endrole
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
