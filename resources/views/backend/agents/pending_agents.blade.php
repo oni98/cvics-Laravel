@@ -16,6 +16,7 @@
                   <th>SL</th>
                   <th>Agent ID</th>
                   <th>Name</th>
+                  <th>Contact No</th>
                   <th>Email</th>
                   <th>Action</th>
                 </tr>
@@ -26,8 +27,10 @@
                         <td>{{ $loop->index+1 }}</td>
                         <td>{{ $agent->code }}</td>
                         <td>{{ $agent->agency_name }}</td>
+                        <td>{{ $agent->phone }}</td>
                         <td>{{ $agent->email }}</td>
                         <td>
+                          <a href="{{route('agents.show', $agent->id)}}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                             <a href="{{url('/admin/agent/approve', $agent->id)}}" class="btn btn-info" title="Approve"><i class="fas fa-check"></i></a>
                             <a class="btn btn-danger" href="{{ route('agents.destroy', $agent->id) }}" title="Cancel" class="nav-link"
                                 onclick="event.preventDefault(); document.getElementById('delete-form-{{$agent->id}}').submit();">

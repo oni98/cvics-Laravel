@@ -12,9 +12,26 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header text-center">
-                    <div class="float-right"><a href="{{ route('agent.edit', $agent->id) }}" class="btn btn-info"
-                            title="Edit">
-                            <i class="fas fa-edit"></i> </a>
+                    <div class="float-right">
+                        @if ($agent->status == 1)
+                            <a href="{{ route('agent.edit', $agent->id) }}" class="btn btn-info" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        @else
+                            <a href="{{ url('/admin/agent/approve', $agent->id) }}" class="btn btn-info" title="Approve"><i
+                                    class="fas fa-check"></i></a>
+                            <a class="btn btn-danger" href="{{ route('agents.destroy', $agent->id) }}" title="Cancel"
+                                class="nav-link"
+                                onclick="event.preventDefault(); document.getElementById('delete-form-{{ $agent->id }}').submit();">
+                                <i class="fas fa-window-close"></i>
+                            </a>
+                            <form id="delete-form-{{ $agent->id }}" action="{{ route('agents.destroy', $agent->id) }}"
+                                method="POST" style="display: none;">
+                                @method('DELETE')
+                                @csrf
+                            </form>
+                        @endif
+
                     </div>
                     <div class="col-md-12 mt-5">
                         <img src="{{ asset('assets/backend/dist/img/application_header.png') }}" alt=""

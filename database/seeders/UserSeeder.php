@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         $user = User::where('email', 'admission.cvics@gmail.com')->first();
         if(is_null($user)){
             $user = new User();
-            $user->name = "Civics";
+            $user->name = "Admin";
             $user->email = "admission.cvics@gmail.com";
             $user->password = Hash::make('password');
             $user->email_verified_at = '2022-08-28 16:09:28';

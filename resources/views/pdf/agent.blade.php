@@ -20,7 +20,6 @@
         }
         td{
             padding: 2px 0px 2px 2px;
-            font-size: 16px;
         }
         .float-right{
             text-align: right;

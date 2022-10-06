@@ -65,6 +65,7 @@ class ApplicationController extends Controller
         $pdf->download('ApplicationForm.pdf'); 
         
         Storage::put('public/applications/' . $application->code . '/ApplicationForm.pdf', $pdf->output());
+
         if ($application->save()) {
             Mail::to($admin[0]->email)->send(new applicationEmail($application));
             Mail::to($application->email)->send(new applicationConfirmMail($application));

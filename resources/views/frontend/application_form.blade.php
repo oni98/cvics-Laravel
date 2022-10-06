@@ -85,20 +85,20 @@
 
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="hsc">HSC/Diploma/Equivalent <span class="text-danger">*</span> </label>
-                    <input type="text" name="hsc" class="form-control" id="hsc" required>
+                    <label for="hsc">HSC/Diploma/Equivalent </label>
+                    <input type="text" name="hsc" class="form-control" id="hsc">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="hsc_year">Year of Completion <span class="text-danger">*</span> </label>
-                    <input type="text" name="hsc_year" class="form-control" id="hsc_year" required>
+                    <label for="hsc_year">Year of Completion</label>
+                    <input type="text" name="hsc_year" class="form-control" id="hsc_year">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="hsc_institute">Institute </label>
                     <input type="text" name="hsc_institute" class="form-control" id="hsc_institute">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="hsc_cgpa">CGPA <span class="text-danger">*</span> </label>
-                    <input type="text" name="hsc_cgpa" class="form-control" id="hsc_cgpa" required>
+                    <label for="hsc_cgpa">CGPA </label>
+                    <input type="text" name="hsc_cgpa" class="form-control" id="hsc_cgpa">
                 </div>
             </div>
 

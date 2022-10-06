@@ -30,10 +30,10 @@ class CreateApplicationsTable extends Migration
             $table->string('ssc_year');
             $table->string('ssc_institute')->nullable();
             $table->string('ssc_cgpa');
-            $table->string('hsc');
-            $table->string('hsc_year');
+            $table->string('hsc')->nullable();
+            $table->string('hsc_year')->nullable();
             $table->string('hsc_institute')->nullable();
-            $table->string('hsc_cgpa');
+            $table->string('hsc_cgpa')->nullable();
             $table->string('bachelor')->nullable();
             $table->string('bachelor_year')->nullable();
             $table->string('bachelor_institute')->nullable();

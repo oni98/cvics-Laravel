@@ -19,6 +19,7 @@
                   <th>SL</th>
                   <th>Agent ID</th>
                   <th>Name</th>
+                  <th>Contact No</th>
                   <th>Email</th>
                   <th>Action</th>
                 </tr>
@@ -29,6 +30,7 @@
                         <td>{{ $loop->index+1 }}</td>
                         <td>{{ $user->code }}</td>
                         <td>{{ $user->agency_name }}</td>
+                        <td>{{ $user->phone }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
                             <a href="{{route('agents.show', $user->id)}}" class="btn btn-info"><i class="fas fa-eye"></i></a>
