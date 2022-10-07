@@ -42,6 +42,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('file.list')}}" class="nav-link {{ request()->is('necessary-files') ? 'active' : null }}">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>
+                            Necessary Files
+                        </p>
+                    </a>
+                </li>
                 @role('agent')
                 <li class="nav-item">
                     <a href="{{route('agent.application.list')}}" class="nav-link {{ request()->is('applications') ? 'active' : null }}">

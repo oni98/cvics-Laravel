@@ -6,6 +6,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\PromotionalPackageController;
 use App\Http\Controllers\QuotationController;
@@ -48,11 +49,15 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
     Route::get('/applications', [AgentController::class, 'applicationList'])->name('agent.application.list');
     Route::get('/application/{id}/show', [ApplicationController::class, 'showApplication'])->name('application.show');
     Route::get('/application/export-a', [ApplicationController::class, 'agentExcelExport'])->name('agent.application.excel');
+    
     // Promotional Package Routes
     Route::get('/promotional-packages', [PromotionalPackageController::class, 'index'])->name('package.list');
 
-    //Quotation Routes
+    // Quotation Routes
     Route::get('/quotation/{id}', [QuotationController::class, 'index'])->name('quotation.create');
+
+    // Files Upload Routes
+    Route::get('/necessary-files', [FileUploadController::class, 'index'])->name('file.list');
 
     // ***Admin Routes***
     Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'],  function () {
@@ -85,6 +90,10 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
         // Promotional Package Routes
         Route::post('/promotional-packages/store', [PromotionalPackageController::class, 'store'])->name('package.store');
         Route::delete('/promotional-packages/{id}/delete', [PromotionalPackageController::class, 'destroy'])->name('package.destroy');
+
+        // Files Upload Routes
+        Route::post('/necessary-files/store', [FileUploadController::class, 'store'])->name('file.store');
+        Route::delete('/necessary-files/{id}/delete', [FileUploadController::class, 'destroy'])->name('file.destroy');
 
         //Generate PDF Routes
         Route::post('/generate-pdf/apfid={id}', [ApplicationController::class, 'generatePdf'])->name('generatePdf');
