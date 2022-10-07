@@ -88,6 +88,7 @@ Route::group(['middleware' => ['verified', 'auth']],  function () {
 
         //Generate PDF Routes
         Route::post('/generate-pdf/apfid={id}', [ApplicationController::class, 'generatePdf'])->name('generatePdf');
+        Route::post('/generate-agent-pdf/agpfid={id}', [AgentController::class, 'generateAgentPdf'])->name('generateAgentPdf');
 
         //Quotation Routes
         Route::delete('/quotation/delete/{id}', [QuotationController::class, 'destroy'])->name('quotation.destroy');

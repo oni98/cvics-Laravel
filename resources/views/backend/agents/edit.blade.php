@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-header text-center">
                     <div class="col-md-12 mt-5">
-                        <img src="{{ asset('assets/backend/dist/img/application_header.png') }}" alt=""
+                        <img src="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" alt=""
                             width="100%">
                     </div>
                 </div>
@@ -27,11 +27,10 @@
                         <tr>
                             <td class="col-md-3 font-weight-bold">Agent ID</td>
                             <td class="col-md-4">{{ $agent->code }}</td>
-                            <td class="col-md-4" rowspan="4" colspan="2"><img
+                            {{-- <td class="col-md-4" rowspan="4" colspan="2"><img
                                     src="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" alt=""
-                                    width="50%" class="float-right"></td>
-                        </tr>
-                        <tr>
+                                    width="50%" class="float-right"></td> --}}
+
                             <td class="col-md-3 font-weight-bold">Agency Name</td>
                             <td class="col-md-4"><input type="text" class="form-control" name="agency_name" value="{{ $agent->agency_name }}"></td>
                             
@@ -39,8 +38,7 @@
                         <tr>
                             <td class="col-md-3 font-weight-bold">Email</td>
                             <td class="col-md-4"><input type="text" class="form-control" name="email" value="{{ $agent->email }}"></td>
-                        </tr>
-                        <tr>
+
                             <td class="col-md-3 font-weight-bold">Contact Person</td>
                             <td class="col-md-4"><input type="text" class="form-control" name="contact_person" value="{{ $agent->contact_person }}"></td>
                         </tr>

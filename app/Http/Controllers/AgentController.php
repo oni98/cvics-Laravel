@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use PDF;
 
 class AgentController extends Controller
 {
@@ -48,6 +49,18 @@ class AgentController extends Controller
 
         session()->flash('success', 'Registration Form submitted Successfully');
         return back();
+    }
+
+    public function generateAgentPdf($id)
+    {
+        $agent = Agent::find($id);
+
+        $data = [
+            'agent' => $agent
+        ];
+
+        $pdf = PDF::loadView('pdf.agent', $data);
+        return $pdf->download('Agent-'.$agent->code.'.pdf');
     }
 
     /**

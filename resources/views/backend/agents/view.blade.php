@@ -12,6 +12,10 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header text-center">
+                    {!! Form::open(['route'=> ['generateAgentPdf', $agent->id], 'method' => 'POST']) !!}
+                    <div class="float-left"><button type="submit" class="btn btn-info" title="Download PDF"><i class="fas fa-file-pdf"></i></button>
+                        </div>
+                    {!! Form::close() !!}
                     <div class="float-right">
                         @if ($agent->status == 1)
                             <a href="{{ route('agent.edit', $agent->id) }}" class="btn btn-info" title="Edit">
@@ -33,7 +37,7 @@
                         @endif
                     </div>
                     <div class="col-md-12 mt-5">
-                        <img src="{{ asset('assets/backend/dist/img/application_header.png') }}" alt=""
+                        <img src="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" alt=""
                             width="100%">
                     </div>
                 </div>
@@ -44,19 +48,17 @@
                         <tr>
                             <td class="col-md-3 font-weight-bold">Agent ID</td>
                             <td class="col-md-4">{{ $agent->code }}</td>
-                            <td class="col-md-4" rowspan="4" colspan="2"><img
+                            {{-- <td class="col-md-4" rowspan="4" colspan="2"><img
                                     src="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" alt=""
-                                    width="50%" class="float-right"></td>
-                        </tr>
-                        <tr>
+                                    width="50%" class="float-right"></td> --}}
+
                             <td class="col-md-3 font-weight-bold">Agency Name</td>
                             <td class="col-md-4">{{ $agent->agency_name }}</td>
                         </tr>
                         <tr>
                             <td class="col-md-3 font-weight-bold">Email</td>
                             <td class="col-md-4">{{ $agent->email }}</td>
-                        </tr>
-                        <tr>
+
                             <td class="col-md-3 font-weight-bold">Contact Person</td>
                             <td class="col-md-4">{{ $agent->contact_person }}</td>
                         </tr>

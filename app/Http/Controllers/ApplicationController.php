@@ -91,7 +91,7 @@ class ApplicationController extends Controller
         ];
 
         $pdf = PDF::loadView('pdf.application', $data);
-        return $pdf->download('ApplicationForm.pdf');
+        return $pdf->download('ApplicationForm-'.$application->code.'.pdf');
     }
 
     public function excelExport(){
