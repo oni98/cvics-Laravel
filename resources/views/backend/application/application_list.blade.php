@@ -50,7 +50,7 @@
                                     <td>{{ $application->email }}</td>
                                     <td>{{ $application->mobile }}</td>
                                     <td>{{ $application->passport }}</td>
-                                    <td>{{ $agents[$application->referrer - 1]->name }}</td>
+                                    <td>{{ !empty($agents[$application->referrer - 1]->name)? $agents[$application->referrer - 1]->name : '' }}</td>
                                     <td>{{ $application->intake_month . ', ' . $application->intake_year }}</td>
                                     <td>{{ $application->prepared_institution1 }}</td>
                                     <td>{{ $application->study_destination }}</td>
@@ -101,6 +101,7 @@
             $("#example1").DataTable({
                 "lengthChange": false,
                 "autoWidth": false,
+                "ordering": true,
                 "buttons": ["Create user"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#example2').DataTable({

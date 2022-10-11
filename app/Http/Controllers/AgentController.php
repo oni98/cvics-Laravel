@@ -90,7 +90,15 @@ class AgentController extends Controller
     
     public function applicationList()
     {
-        $applications = Application::where('referrer',Auth::id())->get();
+        $applications = Application::where([['referrer',Auth::id()],['status', '!=', 2]])->orderBy('id','DESC')->get();
+        $status = Status::all();
+        $agents = User::all();
+        return view('backend.application.application_list', ['applications' => $applications, 'status' => $status, 'agents'=>$agents]);
+    }
+    
+    public function completedApplication()
+    {
+        $applications = Application::where([['referrer',Auth::id()],['status', 2]])->orderBy('id','DESC')->get();
         $status = Status::all();
         $agents = User::all();
         return view('backend.application.application_list', ['applications' => $applications, 'status' => $status, 'agents'=>$agents]);

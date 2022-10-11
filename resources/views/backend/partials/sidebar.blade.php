@@ -15,7 +15,7 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{auth()->user()->name}}</a>
+                <a href="#" class="d-block">{{ auth()->user()->name }}</a>
             </div>
         </div>
 
@@ -25,9 +25,10 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               
+
                 <li class="nav-item">
-                    <a href="{{route('dashboard')}}" class="nav-link {{ Request::is('dashboard') ? 'active' : null }}">
+                    <a href="{{ route('dashboard') }}"
+                        class="nav-link {{ Request::is('dashboard') ? 'active' : null }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -35,7 +36,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('package.list')}}" class="nav-link {{ request()->is('promotional-packages') ? 'active' : null }}">
+                    <a href="{{ route('package.list') }}"
+                        class="nav-link {{ request()->is('promotional-packages') ? 'active' : null }}">
                         <i class="nav-icon fas fa-box"></i>
                         <p>
                             Promotional Packages
@@ -43,7 +45,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('file.list')}}" class="nav-link {{ request()->is('necessary-files') ? 'active' : null }}">
+                    <a href="{{ route('file.list') }}"
+                        class="nav-link {{ request()->is('necessary-files') ? 'active' : null }}">
                         <i class="nav-icon fas fa-file"></i>
                         <p>
                             Necessary Files
@@ -51,14 +54,40 @@
                     </a>
                 </li>
                 @role('agent')
-                <li class="nav-item">
-                    <a href="{{route('agent.application.list')}}" class="nav-link {{ request()->is('applications') ? 'active' : null }}">
-                        <i class="nav-icon fas fa-file-alt"></i>
-                        <p>
-                            Application List
-                        </p>
-                    </a>
-                </li>
+                    {{-- <li class="nav-item">
+                        <a href="{{ route('agent.application.list') }}"
+                            class="nav-link {{ request()->is('applications') ? 'active' : null }}">
+                            <i class="nav-icon fas fa-file-alt"></i>
+                            <p>
+                                Application List
+                            </p>
+                        </a>
+                    </li> --}}
+                    <li class="nav-item {{ request()->is('applications*') ? 'menu-open' : null }}">
+                        <a href="#" class="nav-link {{ request()->is('applications*') ? 'active' : null }}">
+                            <i class="nav-icon fas fa-briefcase"></i>
+                            <p>
+                                Applications
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('agent.application.list') }}"
+                                    class="nav-link {{ request()->is('applications') ? 'active' : null }}">
+                                    <i class="fas fa-list nav-icon"></i>
+                                    <p>Application List</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('agent.completedApplication.list') }}"
+                                    class="nav-link {{ request()->is('applications/completed') ? 'active' : null }}">
+                                    <i class="fa fa-hourglass nav-icon"></i>
+                                    <p>Completed Applications</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 @endrole
                 @role('admin')
                     {{-- <li class="nav-item">
@@ -77,16 +106,43 @@
                             </p>
                         </a>
                     </li> --}}
-                    <li class="nav-item">
-                        <a href="{{route('application.list')}}" class="nav-link {{ request()->is('admin/application*') ? 'active' : null }}">
+                    {{-- <li class="nav-item">
+                        <a href="{{ route('application.list') }}"
+                            class="nav-link {{ request()->is('admin/application*') ? 'active' : null }}">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>
                                 Application List
                             </p>
                         </a>
+                    </li> --}}
+                    <li class="nav-item {{ request()->is('admin/application*') ? 'menu-open' : null }}">
+                        <a href="#" class="nav-link {{ request()->is('admin/application*') ? 'active' : null }}">
+                            <i class="nav-icon fas fa-briefcase"></i>
+                            <p>
+                                Applications
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('application.list') }}"
+                                    class="nav-link {{ request()->is('admin/application/list') ? 'active' : null }}">
+                                    <i class="fas fa-list nav-icon"></i>
+                                    <p>Application List</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('completedApplication.list') }}"
+                                    class="nav-link {{ request()->is('admin/application/completed/list') ? 'active' : null }}">
+                                    <i class="fa fa-hourglass nav-icon"></i>
+                                    <p>Completed Applications</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('status.list')}}" class="nav-link {{ request()->is('admin/status*') ? 'active' : null }}">
+                        <a href="{{ route('status.list') }}"
+                            class="nav-link {{ request()->is('admin/status*') ? 'active' : null }}">
                             <i class="nav-icon fas fa-info"></i>
                             <p>
                                 Status List
@@ -95,27 +151,29 @@
                     </li>
                     <li class="nav-item {{ request()->is('admin/agent*') ? 'menu-open' : null }}">
                         <a href="#" class="nav-link {{ request()->is('admin/agent*') ? 'active' : null }}">
-                          <i class="nav-icon fas fa-briefcase"></i>
-                          <p>
-                            Agents
-                            <i class="right fas fa-angle-left"></i>
-                          </p>
+                            <i class="nav-icon fas fa-briefcase"></i>
+                            <p>
+                                Agents
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
                         </a>
                         <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                            <a href="{{route('agents')}}" class="nav-link {{ request()->is('admin/agent/list') ? 'active' : null }}">
-                              <i class="fas fa-list nav-icon"></i>
-                              <p>Agent List</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="{{route('pendingAgents')}}" class="nav-link {{ request()->is('admin/agent/pending') ? 'active' : null }}">
-                              <i class="fa fa-hourglass nav-icon"></i>
-                              <p>Pending Agents</p>
-                            </a>
-                          </li>
+                            <li class="nav-item">
+                                <a href="{{ route('agents') }}"
+                                    class="nav-link {{ request()->is('admin/agent/list') ? 'active' : null }}">
+                                    <i class="fas fa-list nav-icon"></i>
+                                    <p>Agent List</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('pendingAgents') }}"
+                                    class="nav-link {{ request()->is('admin/agent/pending') ? 'active' : null }}">
+                                    <i class="fa fa-hourglass nav-icon"></i>
+                                    <p>Pending Agents</p>
+                                </a>
+                            </li>
                         </ul>
-                      </li>
+                    </li>
                 @endrole
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link"

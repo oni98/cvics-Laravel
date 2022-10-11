@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ @config('app.name') }}</title>
     <style>
-        table {
+        .table {
             border: 1px solid #dee2e6;
             margin-top: 20px;
             width: 100%;
         }
 
-        tr:nth-child(odd) {
+        .table tr:nth-child(odd) {
             background: #f2f2f2;
         }
 
         .fw-bold {
             font-weight: bold;
         }
-        td{
+        .table td{
             padding: 5px 0px 5px 2px;
         }
     </style>
@@ -28,10 +28,11 @@
 
 <body>
     <div>
-        <img src="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" alt=""width="100%">
+        <h4 style="text-align:center;"><u>Recruitment Partner Registration Form</u></h4>
+        <img src="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" alt="" width="20%">
     </div>
     <div>
-        <table>
+        <table class="table">
             <tr>
                 <td class="fw-bold">Agent Id</td>
                 <td>: {{ $agent->code }}</td>

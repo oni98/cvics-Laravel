@@ -111,24 +111,24 @@
                                             value="{{ $application->ssc_cgpa }}" required></td>
                                 </tr>
                                 <tr>
-                                    <td class="font-weight-bold">HSC/Diploma/Equivalent <span class="text-danger">*</span>
+                                    <td class="font-weight-bold">HSC/Diploma/Equivalent
                                     </td>
                                     <td><input class="form-control" type="text" name="hsc"
-                                            value="{{ $application->hsc }}" required></td>
+                                            value="{{ $application->hsc }}"></td>
 
-                                    <td class="font-weight-bold">Year of Completion <span class="text-danger">*</span>
+                                    <td class="font-weight-bold">Year of Completion
                                     </td>
                                     <td><input class="form-control" type="text" name="hsc_year"
-                                            value="{{ $application->hsc_year }}" required></td>
+                                            value="{{ $application->hsc_year }}"></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Institute </td>
                                     <td><input class="form-control" type="text" name="hsc_institute"
                                             value="{{ $application->hsc_institute }}"></td>
 
-                                    <td class="font-weight-bold">CGPA <span class="text-danger">*</span></td>
+                                    <td class="font-weight-bold">CGPA</td>
                                     <td><input class="form-control" type="text" name="hsc_cgpa"
-                                            value="{{ $application->hsc_cgpa }}" required></td>
+                                            value="{{ $application->hsc_cgpa }}"></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Bachelor/Equivalent</td>
@@ -302,19 +302,19 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->photo) }}"
+                                        <a href="{{ asset('storage/applications/' . $application->code . '/' . $application->photo) }}"
                                             download> Click to download Photo
                                         </a>
                                         <input type="file" name="photo">
                                     </td>
                                     <td colspan="2">
-                                        <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->passport_info) }}"
+                                        <a href="{{ asset('storage/applications/' . $application->code . '/' . $application->passport_info) }}"
                                             download> Click to download Passport Info
                                         </a>
                                         <input type="file" name="passport_info">
                                     </td>
                                     <td>
-                                        <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->academic_docs) }}"
+                                        <a href="{{ asset('storage/applications/' . $application->code . '/' . $application->academic_docs) }}"
                                             download> Click to download Academic Docs
                                         </a>
                                         <input type="file" name="academic_docs">
@@ -322,19 +322,19 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->resume) }}"
+                                        <a href="{{ asset('storage/applications/' . $application->code . '/' . $application->resume) }}"
                                             download> Click to download Resume
                                         </a>
                                         <input type="file" name="resume">
                                     </td>
                                     <td colspan="2">
-                                        <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->language_proficiency) }}"
+                                        <a href="{{ asset('storage/applications/' . $application->code . '/' . $application->language_proficiency) }}"
                                             download> Click to download Language Proficiency
                                         </a>
                                         <input type="file" name="language_proficiency">
                                     </td>
                                     <td>
-                                        <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->personal_statement) }}"
+                                        <a href="{{ asset('storage/applications/' . $application->code . '/' . $application->personal_statement) }}"
                                             download> Click to download Personal Statement
                                         </a>
                                         <input type="file" name="personal_statement">
@@ -342,19 +342,19 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->research_proposal) }}"
+                                        <a href="{{ asset('storage/applications/' . $application->code . '/' . $application->research_proposal) }}"
                                             download> Click to download Research Proposal
                                         </a>
                                         <input type="file" name="research_proposal">
                                     </td>
                                     <td colspan="2">
-                                        <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->other1) }}"
+                                        <a href="{{ asset('storage/applications/' . $application->code . '/' . $application->other1) }}"
                                             download> Click to download Other1
                                         </a>
                                         <input type="file" name="other1">
                                     </td>
                                     <td>
-                                        <a href="{{ asset('storage/applications/' . $application->name . '/' . $application->other2) }}"
+                                        <a href="{{ asset('storage/applications/' . $application->code . '/' . $application->other2) }}"
                                             download> Click to download Other2
                                         </a>
                                         <input type="file" name="other2">

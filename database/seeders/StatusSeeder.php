@@ -17,5 +17,9 @@ class StatusSeeder extends Seeder
         $status = new Status();
         $status->name = 'Pending';
         $status->save();
+
+        $status = new Status();
+        $status->name = 'Completed';
+        $status->save();
     }
 }

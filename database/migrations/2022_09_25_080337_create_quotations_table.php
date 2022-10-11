@@ -16,6 +16,7 @@ class CreateQuotationsTable extends Migration
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('applicant_id')->constrained('applications')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('user_id');
             $table->string('quotation_pdf');
             $table->timestamps();
         });

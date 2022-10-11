@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-md-12 mt-5">
                         <img src="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" alt=""
-                            width="100%">
+                            width="20%">
                     </div>
                 </div>
                 <!-- /.card-header -->

@@ -39,7 +39,7 @@
 
 <body>
     <div>
-        <img src="{{ asset('assets/backend/dist/img/quotation_header.png') }}" width="100%">
+        <img src="{{ asset('storage/agents/' . $agent->code . '/' . $agent->logo) }}" alt="" width="30%">
     </div>
     <div>
         <h6><u>Quotation To</u>:</h6>

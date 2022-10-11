@@ -267,7 +267,15 @@ class ApplicationController extends Controller
 
     public function applicationList()
     {
-        $applications = Application::all();
+        $applications = Application::where('status', '!=', 2)->orderBy('id','DESC')->get();
+        $status = Status::all();
+        $agents = User::all();
+        return view('backend.application.application_list', ['applications' => $applications, 'status' => $status, 'agents'=>$agents]);
+    }
+
+    public function completedApplication()
+    {
+        $applications = Application::where('status', 2)->orderBy('id','DESC')->get();
         $status = Status::all();
         $agents = User::all();
         return view('backend.application.application_list', ['applications' => $applications, 'status' => $status, 'agents'=>$agents]);

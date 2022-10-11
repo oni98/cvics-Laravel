@@ -92,6 +92,7 @@
                             </div>
                         </div>
                     </div>
+                    <a style="display: none;" id="recentFile" href="" download></a>
                     <div class="table-responsive">
                         <table class="table table-hover table-white">
                             <thead>
@@ -170,7 +171,7 @@
                 </div>
                 <!-- /.card-body -->
             </div>
-            {{-- <div class="card">
+            <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
                     @include('backend.partials.message')
@@ -216,7 +217,7 @@
                     </div>
                 </div>
                 <!-- /.card-body -->
-            </div> --}}
+            </div>
             <!-- /.card -->
         </div><!-- /.container-fluid -->
     </section>
@@ -236,7 +237,8 @@
                     total: 0,
                     discount: '',
                     currency: '',
-                    tnc: ''
+                    tnc: '',
+                    user_id: '{{ $user_id }}'
                 },
                 invoiceItems: [{
                     description: '',
@@ -245,8 +247,9 @@
                     tax: '',
                     amount: ''
                 }],
-                id: '{{ $applicant->id }}'
-
+                id: '{{ $applicant->id }}',
+                recentFile: ''
+                
             },
             methods: {
                 addRow: function(index) {
@@ -304,11 +307,34 @@
                     let form_data = ref.form_data;
                     form_data['invoiceItems'] = ref.invoiceItems;
                     axios.post(url, form_data).then(function(response) {
-                        //invoice validation
-
+                        ref.recentFile = response.data.file_name;
+                        $("#recentFile").attr('href', '/'+response.data.file_name);
+                        $("#recentFile").click(function (){
+                            $(this.click())
+                        });
+                        $("#recentFile").trigger('click');
                     });
                 },
             }
+        });
+    </script>
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                "lengthChange": false,
+                "autoWidth": false,
+                "ordering": true,
+                "buttons": ["Create user"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
         });
     </script>
 @endpush
